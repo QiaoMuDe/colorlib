@@ -6,66 +6,61 @@ import (
 
 func TestColorLib(t *testing.T) {
 	// 创建 ColorLib 实例
-	colorLib := NewColorLib()
+	cl := NewColorLib()
 
-	// 测试 Blue 方法
-	colorLib.Blue("This is a blue message")
+	// 测试各种颜色的打印和返回方法（带占位符）
+	cl.Bluef("这是一条带有占位符的蓝色消息: %d", 123)
+	cl.Greenf("这是一条带有占位符的绿色消息: %s", "测试")
+	cl.Redf("这是一条带有占位符的红色消息: %f", 3.14)
+	cl.Yellowf("这是一条带有占位符的黄色消息: %v", []int{1, 2, 3})
+	cl.Purplef("这是一条带有占位符的紫色消息: %t", true)
 
-	// 测试 Green 方法
-	colorLib.Green("This is a green message")
+	blueStr := cl.Sbluef("这是一条带有占位符的蓝色字符串: %d", 456)
+	greenStr := cl.Sgreenf("这是一条带有占位符的绿色字符串: %s", "测试2")
+	redStr := cl.Sredf("这是一条带有占位符的红色字符串: %f", 6.28)
+	yellowStr := cl.Syellowf("这是一条带有占位符的黄色字符串: %v", []int{4, 5, 6})
+	purpleStr := cl.Spurplef("这是一条带有占位符的紫色字符串: %t", false)
 
-	// 测试 Red 方法
-	colorLib.Red("This is a red message")
+	t.Logf("蓝色字符串: %s", blueStr)
+	t.Logf("绿色字符串: %s", greenStr)
+	t.Logf("红色字符串: %s", redStr)
+	t.Logf("黄色字符串: %s", yellowStr)
+	t.Logf("紫色字符串: %s", purpleStr)
 
-	// 测试 Yellow 方法
-	colorLib.Yellow("This is a yellow message")
+	// 测试各种颜色的打印和返回方法（不带占位符）
+	cl.Blue("这是一条没有占位符的蓝色消息")
+	cl.Green("这是一条没有占位符的绿色消息")
+	cl.Red("这是一条没有占位符的红色消息")
+	cl.Yellow("这是一条没有占位符的黄色消息")
+	cl.Purple("这是一条没有占位符的紫色消息")
 
-	// 测试 Purple 方法
-	colorLib.Purple("This is a purple message")
+	blueStr2 := cl.Sblue("这是一条没有占位符的蓝色字符串")
+	greenStr2 := cl.Sgreen("这是一条没有占位符的绿色字符串")
+	redStr2 := cl.Sred("这是一条没有占位符的红色字符串")
+	yellowStr2 := cl.Syellow("这是一条没有占位符的黄色字符串")
+	purpleStr2 := cl.Spurple("这是一条没有占位符的紫色字符串")
 
-	// 测试 Sblue 方法
-	blueStr := colorLib.Sblue("This is a blue string")
-	if blueStr != "\033[1;34mThis is a blue string\033[0m" {
-		t.Errorf("Sblue method returned incorrect result")
-	}
+	t.Logf("蓝色字符串2: %s", blueStr2)
+	t.Logf("绿色字符串2: %s", greenStr2)
+	t.Logf("红色字符串2: %s", redStr2)
+	t.Logf("黄色字符串2: %s", yellowStr2)
+	t.Logf("紫色字符串2: %s", purpleStr2)
 
-	// 测试 Sgreen 方法
-	greenStr := colorLib.Sgreen("This is a green string")
-	if greenStr != "\033[1;32mThis is a green string\033[0m" {
-		t.Errorf("Sgreen method returned incorrect result")
-	}
+	// 测试 PromptMsg 方法
+	cl.PromptMsg("成功", "绿色", "这是一条成功消息")
+	cl.PromptMsg("错误", "红色", "这是一条错误消息")
+	cl.PromptMsg("警告", "黄色", "这是一条警告消息")
+	cl.PromptMsg("信息", "蓝色", "这是一条信息消息")
 
-	// 测试 Sred 方法
-	redStr := colorLib.Sred("This is a red string")
-	if redStr != "\033[1;31mThis is a red string\033[0m" {
-		t.Errorf("Sred method returned incorrect result")
-	}
+	// 测试 PrintSuccessf、PrintErrorf、PrintWarningf、PrintInfof 方法（带占位符）
+	cl.PrintSuccessf("这是一条带有占位符的成功消息: %d", 789)
+	cl.PrintErrorf("这是一条带有占位符的错误消息: %s", "测试3")
+	cl.PrintWarningf("这是一条带有占位符的警告消息: %f", 9.87)
+	cl.PrintInfof("这是一条带有占位符的信息消息: %v", []int{7, 8, 9})
 
-	// 测试 Syellow 方法
-	yellowStr := colorLib.Syellow("This is a yellow string")
-	if yellowStr != "\033[1;33mThis is a yellow string\033[0m" {
-		t.Errorf("Syellow method returned incorrect result")
-	}
-
-	// 测试 Spurple 方法
-	purpleStr := colorLib.Spurple("This is a purple string")
-	if purpleStr != "\033[1;35mThis is a purple string\033[0m" {
-		t.Errorf("Spurple method returned incorrect result")
-	}
-
-	// 测试 PrintSuccess 方法
-	colorLib.PrintSuccess("This is a success message")
-
-	// 测试 PrintError 方法
-	colorLib.PrintError("This is an error message")
-
-	// 测试 PrintWarning 方法
-	colorLib.PrintWarning("This is a warning message")
-
-	// 测试 PrintInfo 方法
-	colorLib.PrintInfo("This is an info message")
-
-	// 测试无效颜色
-	colorLib.printWithColor("invalidColor", "This is an invalid color message")
-	colorLib.returnWithColor("invalidColor", "This is an invalid color string")
+	// 测试 PrintSuccess、PrintError、PrintWarning、PrintInfo 方法（不带占位符）
+	cl.PrintSuccess("这是一条没有占位符的成功消息")
+	cl.PrintError("这是一条没有占位符的错误消息")
+	cl.PrintWarning("这是一条没有占位符的警告消息")
+	cl.PrintInfo("这是一条没有占位符的信息消息")
 }

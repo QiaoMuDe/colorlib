@@ -1,15 +1,17 @@
-# ColorLib - Go 语言颜色输出库
+# ColorLib - Go 语言的彩色终端输出库
 
-`ColorLib` 是一个用于在终端中输出彩色文本的 Go 语言库。它提供了多种颜色和日志级别的支持，使得在控制台中输出带有颜色的文本变得更加简单和直观。通过 `ColorLib`，你可以轻松地为你的命令行工具添加颜色提示，提升用户体验。
+## 用途和特点
 
-## 特点
+`ColorLib` 是一个用于在 Go 语言中实现彩色终端输出的库。它提供了丰富的接口，用于打印和返回带有颜色的文本，并支持自定义颜色和日志级别。该库的主要特点包括：
 
-- **支持多种颜色**：包括蓝色、绿色、红色、黄色和紫色。
-- **日志级别支持**：提供了成功、错误、警告和信息四种日志级别，每种级别都有对应的前缀符号。
-- **简单易用**：通过简单的 API 调用，即可在控制台中输出带有颜色的文本。
-- **灵活性强**：支持直接打印彩色文本，也支持返回彩色字符串，方便进一步处理。
+- 支持多种颜色输出，包括蓝色、绿色、红色、黄色和紫色。
+- 提供带占位符和不带占位符的打印方法。
+- 支持日志级别前缀，方便打印带有提示信息的消息。
+- 简洁易用的接口，方便开发者快速集成。
 
-## 颜色映射表
+## 定义的颜色和数字
+
+以下是库中定义的颜色及其对应的 ANSI 颜色代码：
 
 | 颜色名称 | ANSI 颜色代码 |
 | -------- | ------------- |
@@ -19,60 +21,71 @@
 | yellow   | 33            |
 | purple   | 35            |
 
-## 日志级别映射表
+## 提示信息级别和名称
 
-| 日志级别 | 前缀符号 |
+以下是库中定义的日志级别及其对应的前缀：
+
+| 日志级别 | 前缀名称 |
 | -------- | -------- |
 | success  | [√]      |
 | error    | [×]      |
 | warning  | [!]      |
 | info     | [i]      |
 
-## 结构体方法
+## 结构体方法和函数
 
-`ColorLib` 结构体实现了 `ColorLibInterface` 接口，提供了以下方法：
+### 结构体方法
 
-- **颜色打印方法**：
-  - `Blue(format string, a ...any)`：打印蓝色文本。
-  - `Green(format string, a ...any)`：打印绿色文本。
-  - `Red(format string, a ...any)`：打印红色文本。
-  - `Yellow(format string, a ...any)`：打印黄色文本。
-  - `Purple(format string, a ...any)`：打印紫色文本。
+`ColorLib` 结构体实现了以下方法：
 
-- **颜色字符串返回方法**：
-  - `Sblue(format string, a ...any) string`：返回蓝色字符串。
-  - `Sgreen(format string, a ...any) string`：返回绿色字符串。
-  - `Sred(format string, a ...any) string`：返回红色字符串。
-  - `Syellow(format string, a ...any) string`：返回黄色字符串。
-  - `Spurple(format string, a ...any) string`：返回紫色字符串。
+| 方法名称                    | 描述                                 |
+| --------------------------- | ------------------------------------ |
+| Bluef(format, a...)         | 打印蓝色信息到控制台（带占位符）     |
+| Greenf(format, a...)        | 打印绿色信息到控制台（带占位符）     |
+| Redf(format, a...)          | 打印红色信息到控制台（带占位符）     |
+| Yellowf(format, a...)       | 打印黄色信息到控制台（带占位符）     |
+| Purplef(format, a...)       | 打印紫色信息到控制台（带占位符）     |
+| Sbluef(format, a...)        | 返回构造后的蓝色字符串（带占位符）   |
+| Sgreenf(format, a...)       | 返回构造后的绿色字符串（带占位符）   |
+| Sredf(format, a...)         | 返回构造后的红色字符串（带占位符）   |
+| Syellowf(format, a...)      | 返回构造后的黄色字符串（带占位符）   |
+| Spurplef(format, a...)      | 返回构造后的紫色字符串（带占位符）   |
+| Blue(msg)                   | 打印蓝色信息到控制台（不带占位符）   |
+| Green(msg)                  | 打印绿色信息到控制台（不带占位符）   |
+| Red(msg)                    | 打印红色信息到控制台（不带占位符）   |
+| Yellow(msg)                 | 打印黄色信息到控制台（不带占位符）   |
+| Purple(msg)                 | 打印紫色信息到控制台（不带占位符）   |
+| Sblue(msg)                  | 返回构造后的蓝色字符串（不带占位符） |
+| Sgreen(msg)                 | 返回构造后的绿色字符串（不带占位符） |
+| Sred(msg)                   | 返回构造后的红色字符串（不带占位符） |
+| Syellow(msg)                | 返回构造后的黄色字符串（不带占位符） |
+| Spurple(msg)                | 返回构造后的紫色字符串（不带占位符） |
+| PrintSuccessf(format, a...) | 打印成功信息到控制台（带占位符）     |
+| PrintErrorf(format, a...)   | 打印错误信息到控制台（带占位符）     |
+| PrintWarningf(format, a...) | 打印警告信息到控制台（带占位符）     |
+| PrintInfof(format, a...)    | 打印信息到控制台（带占位符）         |
+| PrintSuccess(msg)           | 打印成功信息到控制台（不带占位符）   |
+| PrintError(msg)             | 打印错误信息到控制台（不带占位符）   |
+| PrintWarning(msg)           | 打印警告信息到控制台（不带占位符）   |
+| PrintInfo(msg)              | 打印信息到控制台（不带占位符）       |
 
-- **日志级别打印方法**：
-  - `PrintSuccess(format string, a ...any)`：打印成功信息（绿色）。
-  - `PrintError(format string, a ...any)`：打印错误信息（红色）。
-  - `PrintWarning(format string, a ...any)`：打印警告信息（黄色）。
-  - `PrintInfo(format string, a ...any)`：打印信息（蓝色）。
+### 包含的函数
 
-## 安装与使用
+- `NewColorLib()`：创建一个新的 `ColorLib` 实例。
 
-### 下载库
+## 下载和使用
 
-你可以使用 `go get` 命令来下载 `ColorLib` 库：
+### 下载
+
+通过 Go 模块管理工具下载 `ColorLib`：
 
 ```bash
 go get gitee.com/MM-Q/colorlib
 ```
 
-### 引入库
+### 引入和使用
 
-在你的 Go 代码中引入 `ColorLib`：
-
-```go
-import "gitee.com/MM-Q/colorlib"
-```
-
-### 使用示例
-
-以下是一些常见的使用示例：
+在您的 Go 代码中引入 `ColorLib`：
 
 ```go
 package main
@@ -84,39 +97,46 @@ import (
 func main() {
 	cl := colorlib.NewColorLib()
 
-	// 打印彩色文本
-	cl.Blue("This is a blue message")
-	cl.Green("This is a green message")
-	cl.Red("This is a red message")
-	cl.Yellow("This is a yellow message")
-	cl.Purple("This is a purple message")
+	// 打印带有颜色的文本
+	cl.Blue("这是一条蓝色的消息")
+	cl.Greenf("这是一条绿色的消息：%s", "Hello, ColorLib!")
 
-	// 返回彩色字符串
-	blueMsg := cl.Sblue("This is a blue message")
-	greenMsg := cl.Sgreen("This is a green message")
-	fmt.Println(blueMsg)
-	fmt.Println(greenMsg)
+	// 返回带有颜色的字符串
+	coloredString := cl.Sred("这是一条红色的字符串")
+	fmt.Println(coloredString)
 
-	// 打印日志级别信息
-	cl.PrintSuccess("Operation completed successfully")
-	cl.PrintError("An error occurred")
-	cl.PrintWarning("This is a warning")
-	cl.PrintInfo("This is an info message")
+	// 打印带有日志级别的消息
+	cl.PrintSuccess("操作成功！")
+	cl.PrintError("发生了一个错误")
+	cl.PrintWarning("请注意：这是一个警告")
+	cl.PrintInfo("这是一条普通信息")
 }
 ```
 
-### 输出示例
+## 常用用法
 
-运行上述代码后，你将在终端中看到如下输出：
+以下是 `ColorLib` 的一些常用用法示例：
 
-```powershell
-[蓝色文本] This is a blue message
-[绿色文本] This is a green message
-[红色文本] This is a red message
-[黄色文本] This is a yellow message
-[紫色文本] This is a purple message
-[√] Operation completed successfully
-[×] An error occurred
-[!] This is a warning
-[i] This is an info message
+### 打印彩色文本
+
+```go
+cl := colorlib.NewColorLib()
+cl.Blue("蓝色文本")
+cl.Greenf("绿色文本：%s", "带占位符")
+```
+
+### 返回彩色字符串
+
+```go
+coloredString := cl.Spurple("紫色字符串")
+fmt.Println(coloredString)
+```
+
+### 打印日志级别消息
+
+```go
+cl.PrintSuccess("操作成功！")
+cl.PrintError("发生错误：参数无效")
+cl.PrintWarning("警告：磁盘空间不足")
+cl.PrintInfo("正在处理数据...")
 ```
