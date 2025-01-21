@@ -25,12 +25,12 @@
 
 以下是库中定义的日志级别及其对应的前缀：
 
-| 日志级别 | 前缀名称 |
-| -------- | -------- |
-| success  | [√]      |
-| error    | [×]      |
-| warning  | [!]      |
-| info     | [i]      |
+| 日志级别 | 前缀名称  |
+| :------- | :-------- |
+| success  | [Success] |
+| error    | [Error]   |
+| warning  | [Warning] |
+| info     | [Info]    |
 
 ## 结构体方法和函数
 
@@ -38,36 +38,36 @@
 
 `ColorLib` 结构体实现了以下方法：
 
-| 方法名称                    | 描述                                 |
-| --------------------------- | ------------------------------------ |
-| Bluef(format, a...)         | 打印蓝色信息到控制台（带占位符）     |
-| Greenf(format, a...)        | 打印绿色信息到控制台（带占位符）     |
-| Redf(format, a...)          | 打印红色信息到控制台（带占位符）     |
-| Yellowf(format, a...)       | 打印黄色信息到控制台（带占位符）     |
-| Purplef(format, a...)       | 打印紫色信息到控制台（带占位符）     |
-| Sbluef(format, a...)        | 返回构造后的蓝色字符串（带占位符）   |
-| Sgreenf(format, a...)       | 返回构造后的绿色字符串（带占位符）   |
-| Sredf(format, a...)         | 返回构造后的红色字符串（带占位符）   |
-| Syellowf(format, a...)      | 返回构造后的黄色字符串（带占位符）   |
-| Spurplef(format, a...)      | 返回构造后的紫色字符串（带占位符）   |
-| Blue(msg)                   | 打印蓝色信息到控制台（不带占位符）   |
-| Green(msg)                  | 打印绿色信息到控制台（不带占位符）   |
-| Red(msg)                    | 打印红色信息到控制台（不带占位符）   |
-| Yellow(msg)                 | 打印黄色信息到控制台（不带占位符）   |
-| Purple(msg)                 | 打印紫色信息到控制台（不带占位符）   |
-| Sblue(msg)                  | 返回构造后的蓝色字符串（不带占位符） |
-| Sgreen(msg)                 | 返回构造后的绿色字符串（不带占位符） |
-| Sred(msg)                   | 返回构造后的红色字符串（不带占位符） |
-| Syellow(msg)                | 返回构造后的黄色字符串（不带占位符） |
-| Spurple(msg)                | 返回构造后的紫色字符串（不带占位符） |
-| PrintSuccessf(format, a...) | 打印成功信息到控制台（带占位符）     |
-| PrintErrorf(format, a...)   | 打印错误信息到控制台（带占位符）     |
-| PrintWarningf(format, a...) | 打印警告信息到控制台（带占位符）     |
-| PrintInfof(format, a...)    | 打印信息到控制台（带占位符）         |
-| PrintSuccess(msg)           | 打印成功信息到控制台（不带占位符）   |
-| PrintError(msg)             | 打印错误信息到控制台（不带占位符）   |
-| PrintWarning(msg)           | 打印警告信息到控制台（不带占位符）   |
-| PrintInfo(msg)              | 打印信息到控制台（不带占位符）       |
+| 方法名称                                 | 描述                                 |
+| ---------------------------------------- | ------------------------------------ |
+| `Bluef(format string, a ...any)`         | 打印蓝色信息到控制台（带占位符）     |
+| `Greenf(format string, a ...any)`        | 打印绿色信息到控制台（带占位符）     |
+| `Redf(format string, a ...any)`          | 打印红色信息到控制台（带占位符）     |
+| `Yellowf(format string, a ...any)`       | 打印黄色信息到控制台（带占位符）     |
+| `Purplef(format string, a ...any)`       | 打印紫色信息到控制台（带占位符）     |
+| `Sbluef(format string, a ...any)`        | 返回构造后的蓝色字符串（带占位符）   |
+| `Sgreenf(format string, a ...any)`       | 返回构造后的绿色字符串（带占位符）   |
+| `Sredf(format string, a ...any)`         | 返回构造后的红色字符串（带占位符）   |
+| `Syellowf(format string, a ...any)`      | 返回构造后的黄色字符串（带占位符）   |
+| `Spurplef(format string, a ...any)`      | 返回构造后的紫色字符串（带占位符）   |
+| `Blue(msg ...any)`                       | 打印蓝色信息到控制台（不带占位符）   |
+| `Green(msg ...any)`                      | 打印绿色信息到控制台（不带占位符）   |
+| `Red(msg ...any)`                        | 打印红色信息到控制台（不带占位符）   |
+| `Yellow(msg ...any)`                     | 打印黄色信息到控制台（不带占位符）   |
+| `Purple(msg ...any)`                     | 打印紫色信息到控制台（不带占位符）   |
+| `Sblue(msg ...any)`                      | 返回构造后的蓝色字符串（不带占位符） |
+| `Sgreen(msg ...any)`                     | 返回构造后的绿色字符串（不带占位符） |
+| `Sred(msg ...any)`                       | 返回构造后的红色字符串（不带占位符） |
+| `Syellow(msg ...any)`                    | 返回构造后的黄色字符串（不带占位符） |
+| `Spurple(msg ...any)`                    | 返回构造后的紫色字符串（不带占位符） |
+| `PrintSuccessf(format string, a ...any)` | 打印成功信息到控制台（带占位符）     |
+| `PrintErrorf(format string, a ...any)`   | 打印错误信息到控制台（带占位符）     |
+| `PrintWarningf(format string, a ...any)` | 打印警告信息到控制台（带占位符）     |
+| `PrintInfof(format string, a ...any)`    | 打印信息到控制台（带占位符）         |
+| `PrintSuccess(msg ...any)`               | 打印成功信息到控制台（不带占位符）   |
+| `PrintError(msg ...any)`                 | 打印错误信息到控制台（不带占位符）   |
+| `PrintWarning(msg ...any)`               | 打印警告信息到控制台（不带占位符）   |
+| `PrintInfo(msg ...any)`                  | 打印信息到控制台（不带占位符）       |
 
 ### 包含的函数
 
