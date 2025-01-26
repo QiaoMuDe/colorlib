@@ -13,13 +13,26 @@
 
 以下是库中定义的颜色及其对应的 ANSI 颜色代码：
 
+`PS`:带l开头的为亮色!
+
 | 颜色名称 | ANSI 颜色代码 |
 | -------- | ------------- |
-| blue     | 34            |
-| green    | 32            |
+| black    | 30            |
 | red      | 31            |
+| green    | 32            |
 | yellow   | 33            |
+| blue     | 34            |
 | purple   | 35            |
+| cyan     | 36            |
+| white    | 37            |
+| gray     | 90            |
+| lred     | 91            |
+| lgreen   | 92            |
+| lyellow  | 93            |
+| lblue    | 94            |
+| lpurple  | 95            |
+| lcyan    | 96            |
+| lwhite   | 97            |
 
 ## 提示信息级别和名称
 
@@ -32,46 +45,107 @@
 | warning  | [Warning] |
 | info     | [Info]    |
 
-## 结构体方法和函数
+## 内置的函数
 
-### 结构体方法
+### 创建实例函数
+
+- `NewColorLib()`：创建一个新的 `ColorLib` 实例。
+
+## 结构体实现的方法
 
 `ColorLib` 结构体实现了以下方法：
 
-| 方法名称                                 | 描述                                 |
-| ---------------------------------------- | ------------------------------------ |
-| `Bluef(format string, a ...any)`         | 打印蓝色信息到控制台（带占位符）     |
-| `Greenf(format string, a ...any)`        | 打印绿色信息到控制台（带占位符）     |
-| `Redf(format string, a ...any)`          | 打印红色信息到控制台（带占位符）     |
-| `Yellowf(format string, a ...any)`       | 打印黄色信息到控制台（带占位符）     |
-| `Purplef(format string, a ...any)`       | 打印紫色信息到控制台（带占位符）     |
-| `Sbluef(format string, a ...any)`        | 返回构造后的蓝色字符串（带占位符）   |
-| `Sgreenf(format string, a ...any)`       | 返回构造后的绿色字符串（带占位符）   |
-| `Sredf(format string, a ...any)`         | 返回构造后的红色字符串（带占位符）   |
-| `Syellowf(format string, a ...any)`      | 返回构造后的黄色字符串（带占位符）   |
-| `Spurplef(format string, a ...any)`      | 返回构造后的紫色字符串（带占位符）   |
-| `Blue(msg ...any)`                       | 打印蓝色信息到控制台（不带占位符）   |
-| `Green(msg ...any)`                      | 打印绿色信息到控制台（不带占位符）   |
-| `Red(msg ...any)`                        | 打印红色信息到控制台（不带占位符）   |
-| `Yellow(msg ...any)`                     | 打印黄色信息到控制台（不带占位符）   |
-| `Purple(msg ...any)`                     | 打印紫色信息到控制台（不带占位符）   |
-| `Sblue(msg ...any)`                      | 返回构造后的蓝色字符串（不带占位符） |
-| `Sgreen(msg ...any)`                     | 返回构造后的绿色字符串（不带占位符） |
-| `Sred(msg ...any)`                       | 返回构造后的红色字符串（不带占位符） |
-| `Syellow(msg ...any)`                    | 返回构造后的黄色字符串（不带占位符） |
-| `Spurple(msg ...any)`                    | 返回构造后的紫色字符串（不带占位符） |
-| `PrintSuccessf(format string, a ...any)` | 打印成功信息到控制台（带占位符）     |
-| `PrintErrorf(format string, a ...any)`   | 打印错误信息到控制台（带占位符）     |
-| `PrintWarningf(format string, a ...any)` | 打印警告信息到控制台（带占位符）     |
-| `PrintInfof(format string, a ...any)`    | 打印信息到控制台（带占位符）         |
-| `PrintSuccess(msg ...any)`               | 打印成功信息到控制台（不带占位符）   |
-| `PrintError(msg ...any)`                 | 打印错误信息到控制台（不带占位符）   |
-| `PrintWarning(msg ...any)`               | 打印警告信息到控制台（不带占位符）   |
-| `PrintInfo(msg ...any)`                  | 打印信息到控制台（不带占位符）       |
+### 终端打印（不支持占位符）
 
-### 包含的函数
+| 方法名称                   | 描述                                 |
+| -------------------------- | ------------------------------------ |
+| `Blue(msg ...any)`         | 打印蓝色信息到控制台（不带占位符）   |
+| `Green(msg ...any)`        | 打印绿色信息到控制台（不带占位符）   |
+| `Red(msg ...any)`          | 打印红色信息到控制台（不带占位符）   |
+| `Yellow(msg ...any)`       | 打印黄色信息到控制台（不带占位符）   |
+| `Purple(msg ...any)`       | 打印紫色信息到控制台（不带占位符）   |
+| `PrintSuccess(msg ...any)` | 打印成功信息到控制台（不带占位符）   |
+| `PrintError(msg ...any)`   | 打印错误信息到控制台（不带占位符）   |
+| `PrintWarning(msg ...any)` | 打印警告信息到控制台（不带占位符）   |
+| `PrintInfo(msg ...any)`    | 打印信息到控制台（不带占位符）       |
+| `Black(msg ...any)`        | 打印黑色信息到控制台（不带占位符）   |
+| `Cyan(msg ...any)`         | 打印青色信息到控制台（不带占位符）   |
+| `White(msg ...any)`        | 打印白色信息到控制台（不带占位符）   |
+| `Gray(msg ...any)`         | 打印灰色信息到控制台（不带占位符）   |
+| `Lred(msg ...any)`         | 打印亮红色信息到控制台（不带占位符） |
+| `Lgreen(msg ...any)`       | 打印亮绿色信息到控制台（不带占位符） |
+| `Lyellow(msg ...any)`      | 打印亮黄色信息到控制台（不带占位符） |
+| `Lblue(msg ...any)`        | 打印亮蓝色信息到控制台（不带占位符） |
+| `Lpurple(msg ...any)`      | 打印亮紫色信息到控制台（不带占位符） |
+| `Lcyan(msg ...any)`        | 打印亮青色信息到控制台（不带占位符） |
+| `Lwhite(msg ...any)`       | 打印亮白色信息到控制台（不带占位符） |
 
-- `NewColorLib()`：创建一个新的 `ColorLib` 实例。
+### 终端打印（支持占位符）
+
+| 方法名称                                 | 描述                               |
+| ---------------------------------------- | ---------------------------------- |
+| `Bluef(format string, a ...any)`         | 打印蓝色信息到控制台（带占位符）   |
+| `Greenf(format string, a ...any)`        | 打印绿色信息到控制台（带占位符）   |
+| `Redf(format string, a ...any)`          | 打印红色信息到控制台（带占位符）   |
+| `Yellowf(format string, a ...any)`       | 打印黄色信息到控制台（带占位符）   |
+| `Purplef(format string, a ...any)`       | 打印紫色信息到控制台（带占位符）   |
+| `PrintSuccessf(format string, a ...any)` | 打印成功信息到控制台（带占位符）   |
+| `PrintErrorf(format string, a ...any)`   | 打印错误信息到控制台（带占位符）   |
+| `PrintWarningf(format string, a ...any)` | 打印警告信息到控制台（带占位符）   |
+| `PrintInfof(format string, a ...any)`    | 打印信息到控制台（带占位符）       |
+| `Blackf(format string, a ...any)`        | 打印黑色信息到控制台（带占位符）   |
+| `Cyanf(format string, a ...any)`         | 打印青色信息到控制台（带占位符）   |
+| `Whitef(format string, a ...any)`        | 打印白色信息到控制台（带占位符）   |
+| `Grayf(format string, a ...any)`         | 打印灰色信息到控制台（带占位符）   |
+| `Lredf(format string, a ...any)`         | 打印亮红色信息到控制台（带占位符） |
+| `Lgreenf(format string, a ...any)`       | 打印亮绿色信息到控制台（带占位符） |
+| `Lyellowf(format string, a ...any)`      | 打印亮黄色信息到控制台（带占位符） |
+| `Lbluef(format string, a ...any)`        | 打印亮蓝色信息到控制台（带占位符） |
+| `Lpurplef(format string, a ...any)`      | 打印亮紫色信息到控制台（带占位符） |
+| `Lcyanf(format string, a ...any)`        | 打印亮青色信息到控制台（带占位符） |
+| `Lwhitef(format string, a ...any)`       | 打印亮白色信息到控制台（带占位符） |
+
+### 返回构造字符串（不支持占位符）
+
+| 方法名称               | 描述                                   |
+| ---------------------- | -------------------------------------- |
+| `Sblue(msg ...any)`    | 返回构造后的蓝色字符串（不带占位符）   |
+| `Sgreen(msg ...any)`   | 返回构造后的绿色字符串（不带占位符）   |
+| `Sred(msg ...any)`     | 返回构造后的红色字符串（不带占位符）   |
+| `Syellow(msg ...any)`  | 返回构造后的黄色字符串（不带占位符）   |
+| `Spurple(msg ...any)`  | 返回构造后的紫色字符串（不带占位符）   |
+| `Sblack(msg ...any)`   | 返回构造后的黑色字符串（不带占位符）   |
+| `Scyan(msg ...any)`    | 返回构造后的青色字符串（不带占位符）   |
+| `Swhite(msg ...any)`   | 返回构造后的白色字符串（不带占位符）   |
+| `Sgray(msg ...any)`    | 返回构造后的灰色字符串（不带占位符）   |
+| `Slred(msg ...any)`    | 返回构造后的亮红色字符串（不带占位符） |
+| `Slgreen(msg ...any)`  | 返回构造后的亮绿色字符串（不带占位符） |
+| `Slyellow(msg ...any)` | 返回构造后的亮黄色字符串（不带占位符） |
+| `Slblue(msg ...any)`   | 返回构造后的亮蓝色字符串（不带占位符） |
+| `Slpurple(msg ...any)` | 返回构造后的亮紫色字符串（不带占位符） |
+| `Slcyan(msg ...any)`   | 返回构造后的亮青色字符串（不带占位符） |
+| `Slwhite(msg ...any)`  | 返回构造后的亮白色字符串（不带占位符） |
+
+### 返回构造字符串（支持占位符）
+
+| 方法名称                             | 描述                                 |
+| ------------------------------------ | ------------------------------------ |
+| `Sbluef(format string, a ...any)`    | 返回构造后的蓝色字符串（带占位符）   |
+| `Sgreenf(format string, a ...any)`   | 返回构造后的绿色字符串（带占位符）   |
+| `Sredf(format string, a ...any)`     | 返回构造后的红色字符串（带占位符）   |
+| `Syellowf(format string, a ...any)`  | 返回构造后的黄色字符串（带占位符）   |
+| `Spurplef(format string, a ...any)`  | 返回构造后的紫色字符串（带占位符）   |
+| `Sblackf(format string, a ...any)`   | 返回构造后的黑色字符串（带占位符）   |
+| `Scyanf(format string, a ...any)`    | 返回构造后的青色字符串（带占位符）   |
+| `Swhitef(format string, a ...any)`   | 返回构造后的白色字符串（带占位符）   |
+| `Sgrayf(format string, a ...any)`    | 返回构造后的灰色字符串（带占位符）   |
+| `Slredf(format string, a ...any)`    | 返回构造后的亮红色字符串（带占位符） |
+| `Slgreenf(format string, a ...any)`  | 返回构造后的亮绿色字符串（带占位符） |
+| `Slyellowf(format string, a ...any)` | 返回构造后的亮黄色字符串（带占位符） |
+| `Slbluef(format string, a ...any)`   | 返回构造后的亮蓝色字符串（带占位符） |
+| `Slpurplef(format string, a ...any)` | 返回构造后的亮紫色字符串（带占位符） |
+| `Slcyanf(format string, a ...any)`   | 返回构造后的亮青色字符串（带占位符） |
+| `Slwhitef(format string, a ...any)`  | 返回构造后的亮白色字符串（带占位符） |
 
 ## 下载和使用
 
