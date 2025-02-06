@@ -65,4 +65,8 @@ func TestColorLib(t *testing.T) {
 			}
 		})
 	}
+
+	// 测试调试方法
+	cl.PrintDebug("这是一条调试消息")
+	cl.PrintDebugf("这是一条 %s 调试消息", "格式化")
 }

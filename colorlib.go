@@ -102,6 +102,7 @@ func NewColorLib() *ColorLib {
 			"error":   "[Error] ",   // 错误信息级别的前缀
 			"warning": "[Warning] ", // 警告信息级别的前缀
 			"info":    "[Info] ",    // 信息信息级别的前缀
+			"debug":   "[Debug] ",   // 调试信息级别的前缀
 		},
 		ColorMap: map[string]string{
 			"black":   "30", // 黑色文本的 ANSI 颜色代码
