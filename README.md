@@ -68,6 +68,7 @@
 | `PrintError(msg ...any)`   | 打印错误信息到控制台（不带占位符）   |
 | `PrintWarning(msg ...any)` | 打印警告信息到控制台（不带占位符）   |
 | `PrintInfo(msg ...any)`    | 打印信息到控制台（不带占位符）       |
+| `PrintDebug(msg ...any)`   | 打印调试信息到控制台（不带占位符）   |
 | `Black(msg ...any)`        | 打印黑色信息到控制台（不带占位符）   |
 | `Cyan(msg ...any)`         | 打印青色信息到控制台（不带占位符）   |
 | `White(msg ...any)`        | 打印白色信息到控制台（不带占位符）   |
@@ -93,6 +94,7 @@
 | `PrintErrorf(format string, a ...any)`   | 打印错误信息到控制台（带占位符）   |
 | `PrintWarningf(format string, a ...any)` | 打印警告信息到控制台（带占位符）   |
 | `PrintInfof(format string, a ...any)`    | 打印信息到控制台（带占位符）       |
+| `PrintDebugf(format string, a ...any)`   | 打印调试信息到控制台（带占位符）   |
 | `Blackf(format string, a ...any)`        | 打印黑色信息到控制台（带占位符）   |
 | `Cyanf(format string, a ...any)`         | 打印青色信息到控制台（带占位符）   |
 | `Whitef(format string, a ...any)`        | 打印白色信息到控制台（带占位符）   |
@@ -213,4 +215,5 @@ cl.PrintSuccess("操作成功！")
 cl.PrintError("发生错误：参数无效")
 cl.PrintWarning("警告：磁盘空间不足")
 cl.PrintInfo("正在处理数据...")
+cl.PrintDebug("正在测试...")
 ```

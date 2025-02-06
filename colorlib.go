@@ -27,6 +27,7 @@ type ColorLibInterface interface {
 	PrintErrorf(format string, a ...any)     // 打印错误信息到控制台（带占位符）
 	PrintWarningf(format string, a ...any)   // 打印警告信息到控制台（带占位符）
 	PrintInfof(format string, a ...any)      // 打印信息到控制台（带占位符）
+	PrintDebugf(format string, a ...any)     // 打印调试信息到控制台（带占位符）
 
 	// 新增不带占位符的方法
 	Blue(msg ...any)           // 打印蓝色信息到控制台, 无需占位符
@@ -43,6 +44,7 @@ type ColorLibInterface interface {
 	PrintError(msg ...any)     // 打印错误信息到控制台, 无需占位符
 	PrintWarning(msg ...any)   // 打印警告信息到控制台, 无需占位符
 	PrintInfo(msg ...any)      // 打印信息到控制台, 无需占位符
+	PrintDebug(msg ...any)     // 打印调试信息到控制台, 无需占位符
 
 	// 新增扩展颜色的方法
 	Black(msg ...any)                         // 打印黑色信息到控制台, 无需占位符
@@ -423,6 +425,11 @@ func (c *ColorLib) PrintInfof(format string, a ...any) {
 	c.PromptMsg("info", "blue", format, a...)
 }
 
+// PrintDebugf 方法用于将传入的参数以紫色文本形式打印到控制台，并在文本前添加一个紫色的感叹号（带占位符）。
+func (c *ColorLib) PrintDebugf(format string, a ...any) {
+	c.PromptMsg("debug", "purple", format, a...)
+}
+
 // PrintSuccess 方法用于将传入的参数以绿色文本形式打印到控制台，并在文本前添加一个绿色的勾号（不带占位符）。
 func (c *ColorLib) PrintSuccess(msg ...any) {
 	if len(msg) == 0 {
@@ -473,6 +480,19 @@ func (c *ColorLib) PrintInfo(msg ...any) {
 	// 使用 fmt.Sprint 将 msg 中的所有元素拼接成一个字符串
 	combinedMsg := fmt.Sprint(msg...)
 	c.PromptMsg("info", "blue", "%s", combinedMsg)
+}
+
+// PrintDebug 方法用于将传入的参数以紫色文本形式打印到控制台，并在文本前添加一个紫色的感叹号（不带占位符）。
+func (c *ColorLib) PrintDebug(msg ...any) {
+	if len(msg) == 0 {
+		// 如果没有传入任何参数，直接返回空字符串或默认消息
+		c.PromptMsg("debug", "purple", "%s", "")
+		return
+	}
+
+	// 使用 fmt.Sprint 将 msg 中的所有元素拼接成一个字符串
+	combinedMsg := fmt.Sprint(msg...)
+	c.PromptMsg("debug", "purple", "%s", combinedMsg)
 }
 
 // 扩展补充颜色 黑，青，白，灰
