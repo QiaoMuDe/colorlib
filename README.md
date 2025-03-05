@@ -44,6 +44,7 @@
 | error    | [Error]   |
 | warning  | [Warning] |
 | info     | [Info]    |
+| debug    | [Debug]   |
 
 ## 内置的函数
 

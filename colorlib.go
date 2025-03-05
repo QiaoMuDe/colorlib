@@ -406,32 +406,32 @@ func (c *ColorLib) PromptMsg(level, color, format string, a ...any) {
 	c.printWithColor(color, message.String())
 }
 
-// PrintSuccessf 方法用于将传入的参数以绿色文本形式打印到控制台，并在文本前添加一个绿色的勾号（带占位符）。
+// PrintSuccessf 方法用于将传入的参数以绿色文本形式打印到控制台，并在文本前添加一个表示成功的标志（带占位符）。
 func (c *ColorLib) PrintSuccessf(format string, a ...any) {
 	c.PromptMsg("success", "green", format, a...)
 }
 
-// PrintErrorf 方法用于将传入的参数以红色文本形式打印到控制台，并在文本前添加一个红色的叉号（带占位符）。
+// PrintErrorf 方法用于将传入的参数以红色文本形式打印到控制台，并在文本前添加一个表示错误的标志（带占位符）。
 func (c *ColorLib) PrintErrorf(format string, a ...any) {
 	c.PromptMsg("error", "red", format, a...)
 }
 
-// PrintWarningf 方法用于将传入的参数以黄色文本形式打印到控制台，并在文本前添加一个黄色的感叹号（带占位符）。
+// PrintWarningf 方法用于将传入的参数以黄色文本形式打印到控制台，并在文本前添加一个表示警告的标志（带占位符）。
 func (c *ColorLib) PrintWarningf(format string, a ...any) {
 	c.PromptMsg("warning", "yellow", format, a...)
 }
 
-// PrintInfof 方法用于将传入的参数以蓝色文本形式打印到控制台，并在文本前添加一个蓝色的感叹号（带占位符）。
+// PrintInfof 方法用于将传入的参数以蓝色文本形式打印到控制台，并在文本前添加一个表示信息的标志（带占位符）。
 func (c *ColorLib) PrintInfof(format string, a ...any) {
 	c.PromptMsg("info", "blue", format, a...)
 }
 
-// PrintDebugf 方法用于将传入的参数以紫色文本形式打印到控制台，并在文本前添加一个紫色的感叹号（带占位符）。
+// PrintDebugf 方法用于将传入的参数以紫色文本形式打印到控制台，并在文本前添加一个表示调试的标志（带占位符）。
 func (c *ColorLib) PrintDebugf(format string, a ...any) {
 	c.PromptMsg("debug", "purple", format, a...)
 }
 
-// PrintSuccess 方法用于将传入的参数以绿色文本形式打印到控制台，并在文本前添加一个绿色的勾号（不带占位符）。
+// PrintSuccess 方法用于将传入的参数以绿色文本形式打印到控制台，并在文本前添加一个表示成功的标志（不带占位符）。
 func (c *ColorLib) PrintSuccess(msg ...any) {
 	if len(msg) == 0 {
 		// 如果没有传入任何参数，直接返回空字符串或默认消息
@@ -444,7 +444,7 @@ func (c *ColorLib) PrintSuccess(msg ...any) {
 	c.PromptMsg("success", "green", "%s", combinedMsg)
 }
 
-// PrintError 方法用于将传入的参数以红色文本形式打印到控制台，并在文本前添加一个红色的叉号（不带占位符）。
+// PrintError 方法用于将传入的参数以红色文本形式打印到控制台，并在文本前添加一个表示错误的标志（不带占位符）。
 func (c *ColorLib) PrintError(msg ...any) {
 	if len(msg) == 0 {
 		// 如果没有传入任何参数，直接返回空字符串或默认消息
@@ -457,7 +457,7 @@ func (c *ColorLib) PrintError(msg ...any) {
 	c.PromptMsg("error", "red", "%s", combinedMsg)
 }
 
-// PrintWarning 方法用于将传入的参数以黄色文本形式打印到控制台，并在文本前添加一个黄色的感叹号（不带占位符）。
+// PrintWarning 方法用于将传入的参数以黄色文本形式打印到控制台，并在文本前添加一个表示警告的标志（不带占位符）。
 func (c *ColorLib) PrintWarning(msg ...any) {
 	if len(msg) == 0 {
 		// 如果没有传入任何参数，直接返回空字符串或默认消息
@@ -470,7 +470,7 @@ func (c *ColorLib) PrintWarning(msg ...any) {
 	c.PromptMsg("warning", "yellow", "%s", combinedMsg)
 }
 
-// PrintInfo 方法用于将传入的参数以蓝色文本形式打印到控制台，并在文本前添加一个蓝色的感叹号（不带占位符）。
+// PrintInfo 方法用于将传入的参数以蓝色文本形式打印到控制台，并在文本前添加一个表示信息的标志（不带占位符）。
 func (c *ColorLib) PrintInfo(msg ...any) {
 	if len(msg) == 0 {
 		// 如果没有传入任何参数，直接返回空字符串或默认消息
@@ -483,7 +483,7 @@ func (c *ColorLib) PrintInfo(msg ...any) {
 	c.PromptMsg("info", "blue", "%s", combinedMsg)
 }
 
-// PrintDebug 方法用于将传入的参数以紫色文本形式打印到控制台，并在文本前添加一个紫色的感叹号（不带占位符）。
+// PrintDebug 方法用于将传入的参数以紫色文本形式打印到控制台，并在文本前添加一个表示调试的标志（不带占位符）。
 func (c *ColorLib) PrintDebug(msg ...any) {
 	if len(msg) == 0 {
 		// 如果没有传入任何参数，直接返回空字符串或默认消息
@@ -497,6 +497,8 @@ func (c *ColorLib) PrintDebug(msg ...any) {
 }
 
 // 扩展补充颜色 黑，青，白，灰
+
+// Black 方法用于将传入的参数以黑色文本形式打印到控制台（不带占位符）。
 func (c *ColorLib) Black(msg ...any) {
 	if len(msg) == 0 {
 		// 如果没有传入任何参数，直接返回
@@ -508,6 +510,7 @@ func (c *ColorLib) Black(msg ...any) {
 	c.printWithColor("black", combinedMsg)
 }
 
+// Blackf 方法用于将传入的参数以黑色文本形式打印到控制台（带占位符）。
 func (c *ColorLib) Blackf(format string, a ...any) {
 	// 使用 fmt.Sprintf 格式化参数
 	formattedMsg := fmt.Sprintf(format, a...)
@@ -516,6 +519,7 @@ func (c *ColorLib) Blackf(format string, a ...any) {
 	c.printWithColor("black", formattedMsg)
 }
 
+// Sblack 方法用于将传入的参数以黑色文本形式返回（不带占位符）。
 func (c *ColorLib) Sblack(msg ...any) string {
 	if len(msg) == 0 {
 		// 如果没有传入任何参数，直接返回空字符串
@@ -527,6 +531,7 @@ func (c *ColorLib) Sblack(msg ...any) string {
 	return c.returnWithColor("black", combinedMsg)
 }
 
+// Sblackf 方法用于将传入的参数以黑色文本形式返回（带占位符）。
 func (c *ColorLib) Sblackf(format string, a ...any) string {
 	// 使用 fmt.Sprintf 格式化参数
 	formattedMsg := fmt.Sprintf(format, a...)
@@ -535,6 +540,7 @@ func (c *ColorLib) Sblackf(format string, a ...any) string {
 	return c.returnWithColor("black", formattedMsg)
 }
 
+// Cyan 方法用于将传入的参数以青色文本形式打印到控制台（不带占位符）。
 func (c *ColorLib) Cyan(msg ...any) {
 	if len(msg) == 0 {
 		// 如果没有传入任何参数，直接返回
@@ -546,6 +552,7 @@ func (c *ColorLib) Cyan(msg ...any) {
 	c.printWithColor("cyan", combinedMsg)
 }
 
+// Cyanf 方法用于将传入的参数以青色文本形式打印到控制台（带占位符）。
 func (c *ColorLib) Cyanf(format string, a ...any) {
 	// 使用 fmt.Sprintf 格式化参数
 	formattedMsg := fmt.Sprintf(format, a...)
@@ -554,6 +561,7 @@ func (c *ColorLib) Cyanf(format string, a ...any) {
 	c.printWithColor("cyan", formattedMsg)
 }
 
+// Scyan 方法用于将传入的参数以青色文本形式返回（不带占位符）。
 func (c *ColorLib) Scyan(msg ...any) string {
 	if len(msg) == 0 {
 		// 如果没有传入任何参数，直接返回空字符串
@@ -565,6 +573,7 @@ func (c *ColorLib) Scyan(msg ...any) string {
 	return c.returnWithColor("cyan", combinedMsg)
 }
 
+// Scyanf 方法用于将传入的参数以青色文本形式返回（带占位符）。
 func (c *ColorLib) Scyanf(format string, a ...any) string {
 	// 使用 fmt.Sprintf 格式化参数
 	formattedMsg := fmt.Sprintf(format, a...)
@@ -573,6 +582,7 @@ func (c *ColorLib) Scyanf(format string, a ...any) string {
 	return c.returnWithColor("cyan", formattedMsg)
 }
 
+// White 方法用于将传入的参数以白色文本形式打印到控制台（不带占位符）。
 func (c *ColorLib) White(msg ...any) {
 	if len(msg) == 0 {
 		// 如果没有传入任何参数，直接返回
@@ -584,6 +594,7 @@ func (c *ColorLib) White(msg ...any) {
 	c.printWithColor("white", combinedMsg)
 }
 
+// Whitef 方法用于将传入的参数以白色文本形式打印到控制台（带占位符）。
 func (c *ColorLib) Whitef(format string, a ...any) {
 	// 使用 fmt.Sprintf 格式化参数
 	formattedMsg := fmt.Sprintf(format, a...)
@@ -592,6 +603,7 @@ func (c *ColorLib) Whitef(format string, a ...any) {
 	c.printWithColor("white", formattedMsg)
 }
 
+// Swhite 方法用于将传入的参数以白色文本形式返回（不带占位符）。
 func (c *ColorLib) Swhite(msg ...any) string {
 	if len(msg) == 0 {
 		// 如果没有传入任何参数，直接返回空字符串
@@ -603,6 +615,7 @@ func (c *ColorLib) Swhite(msg ...any) string {
 	return c.returnWithColor("white", combinedMsg)
 }
 
+// Swhitef 方法用于将传入的参数以白色文本形式返回（带占位符）。
 func (c *ColorLib) Swhitef(format string, a ...any) string {
 	// 使用 fmt.Sprintf 格式化参数
 	formattedMsg := fmt.Sprintf(format, a...)
@@ -611,6 +624,7 @@ func (c *ColorLib) Swhitef(format string, a ...any) string {
 	return c.returnWithColor("white", formattedMsg)
 }
 
+// Gray 方法用于将传入的参数以灰色文本形式打印到控制台（不带占位符）。
 func (c *ColorLib) Gray(msg ...any) {
 	if len(msg) == 0 {
 		// 如果没有传入任何参数，直接返回
@@ -622,6 +636,7 @@ func (c *ColorLib) Gray(msg ...any) {
 	c.printWithColor("gray", combinedMsg)
 }
 
+// Grayf 方法用于将传入的参数以灰色文本形式打印到控制台（带占位符）。
 func (c *ColorLib) Grayf(format string, a ...any) {
 	// 使用 fmt.Sprintf 格式化参数
 	formattedMsg := fmt.Sprintf(format, a...)
@@ -630,6 +645,7 @@ func (c *ColorLib) Grayf(format string, a ...any) {
 	c.printWithColor("gray", formattedMsg)
 }
 
+// Sgray 方法用于将传入的参数以灰色文本形式返回（不带占位符）。
 func (c *ColorLib) Sgray(msg ...any) string {
 	if len(msg) == 0 {
 		// 如果没有传入任何参数，直接返回空字符串
@@ -641,6 +657,7 @@ func (c *ColorLib) Sgray(msg ...any) string {
 	return c.returnWithColor("gray", combinedMsg)
 }
 
+// Sgrayf 方法用于将传入的参数以灰色文本形式返回（带占位符）。
 func (c *ColorLib) Sgrayf(format string, a ...any) string {
 	// 使用 fmt.Sprintf 格式化参数
 	formattedMsg := fmt.Sprintf(format, a...)
@@ -650,7 +667,9 @@ func (c *ColorLib) Sgrayf(format string, a ...any) string {
 }
 
 // 扩展颜色 亮红色 亮绿色 亮黄色 亮蓝色 亮紫色 亮青色 亮白色
+// Lred 方法用于将传入的参数以亮红色文本形式打印到控制台（不带占位符）。
 func (c *ColorLib) Lred(msg ...any) {
+	// 检查传入的参数数量，如果为0，则直接返回
 	if len(msg) == 0 {
 		// 如果没有传入任何参数，直接返回
 		return
@@ -658,9 +677,11 @@ func (c *ColorLib) Lred(msg ...any) {
 
 	// 使用 fmt.Sprint 将所有参数拼接成一个字符串
 	combinedMsg := fmt.Sprint(msg...)
+	// 调用 ColorLib 类型的 printWithColor 方法，传入颜色 "lred" 和拼接后的字符串
 	c.printWithColor("lred", combinedMsg)
 }
 
+// Lredf 方法用于将传入的参数以亮红色文本形式打印到控制台（带占位符）。
 func (c *ColorLib) Lredf(format string, a ...any) {
 	// 使用 fmt.Sprintf 格式化参数
 	formattedMsg := fmt.Sprintf(format, a...)
@@ -669,6 +690,7 @@ func (c *ColorLib) Lredf(format string, a ...any) {
 	c.printWithColor("lred", formattedMsg)
 }
 
+// Slred 方法用于将传入的参数以亮红色文本形式返回（不带占位符）。
 func (c *ColorLib) Slred(msg ...any) string {
 	if len(msg) == 0 {
 		// 如果没有传入任何参数，直接返回空字符串
@@ -680,6 +702,7 @@ func (c *ColorLib) Slred(msg ...any) string {
 	return c.returnWithColor("lred", combinedMsg)
 }
 
+// Slredf 方法用于将传入的参数以亮红色文本形式返回（带占位符）。
 func (c *ColorLib) Slredf(format string, a ...any) string {
 	// 使用 fmt.Sprintf 格式化参数
 	formattedMsg := fmt.Sprintf(format, a...)
@@ -688,6 +711,7 @@ func (c *ColorLib) Slredf(format string, a ...any) string {
 	return c.returnWithColor("lred", formattedMsg)
 }
 
+// Lgreen 方法用于将传入的参数以亮绿色文本形式打印到控制台（不带占位符）。
 func (c *ColorLib) Lgreen(msg ...any) {
 	if len(msg) == 0 {
 		// 如果没有传入任何参数，直接返回
@@ -699,6 +723,7 @@ func (c *ColorLib) Lgreen(msg ...any) {
 	c.printWithColor("lgreen", combinedMsg)
 }
 
+// Lgreenf 方法用于将传入的参数以亮绿色文本形式打印到控制台（带占位符）。
 func (c *ColorLib) Lgreenf(format string, a ...any) {
 	// 使用 fmt.Sprintf 格式化参数
 	formattedMsg := fmt.Sprintf(format, a...)
@@ -707,6 +732,7 @@ func (c *ColorLib) Lgreenf(format string, a ...any) {
 	c.printWithColor("lgreen", formattedMsg)
 }
 
+// Slgreen 方法用于将传入的参数以亮绿色文本形式返回（不带占位符）。
 func (c *ColorLib) Slgreen(msg ...any) string {
 	if len(msg) == 0 {
 		// 如果没有传入任何参数，直接返回空字符串
@@ -717,6 +743,7 @@ func (c *ColorLib) Slgreen(msg ...any) string {
 	return c.returnWithColor("lgreen", combinedMsg)
 }
 
+// Slgreenf 方法用于将传入的参数以亮绿色文本形式返回（带占位符）。
 func (c *ColorLib) Slgreenf(format string, a ...any) string {
 	// 使用 fmt.Sprintf 格式化参数
 	formattedMsg := fmt.Sprintf(format, a...)
@@ -725,6 +752,7 @@ func (c *ColorLib) Slgreenf(format string, a ...any) string {
 	return c.returnWithColor("lgreen", formattedMsg)
 }
 
+// Lyellow 方法用于将传入的参数以亮黄色文本形式打印到控制台（不带占位符）。
 func (c *ColorLib) Lyellow(msg ...any) {
 	if len(msg) == 0 {
 		// 如果没有传入任何参数，直接返回
@@ -736,6 +764,7 @@ func (c *ColorLib) Lyellow(msg ...any) {
 	c.printWithColor("lyellow", combinedMsg)
 }
 
+// Lyellowf 方法用于将传入的参数以亮黄色文本形式打印到控制台（带占位符）。
 func (c *ColorLib) Lyellowf(format string, a ...any) {
 	// 使用 fmt.Sprintf 格式化参数
 	formattedMsg := fmt.Sprintf(format, a...)
@@ -744,6 +773,7 @@ func (c *ColorLib) Lyellowf(format string, a ...any) {
 	c.printWithColor("lyellow", formattedMsg)
 }
 
+// Slblue 方法用于将传入的参数以亮蓝色文本形式返回（不带占位符）。
 func (c *ColorLib) Slyellow(msg ...any) string {
 	if len(msg) == 0 {
 		// 如果没有传入任何参数，直接返回空字符串
@@ -755,6 +785,7 @@ func (c *ColorLib) Slyellow(msg ...any) string {
 	return c.returnWithColor("lyellow", combinedMsg)
 }
 
+// Slbluef 方法用于将传入的参数以亮蓝色文本形式返回（带占位符）。
 func (c *ColorLib) Slyellowf(format string, a ...any) string {
 	// 使用 fmt.Sprintf 格式化参数
 	formattedMsg := fmt.Sprintf(format, a...)
@@ -763,6 +794,7 @@ func (c *ColorLib) Slyellowf(format string, a ...any) string {
 	return c.returnWithColor("lyellow", formattedMsg)
 }
 
+// Lblue 方法用于将传入的参数以亮蓝色文本形式打印到控制台（不带占位符）。
 func (c *ColorLib) Lblue(msg ...any) {
 	if len(msg) == 0 {
 		// 如果没有传入任何参数，直接返回
@@ -774,6 +806,7 @@ func (c *ColorLib) Lblue(msg ...any) {
 	c.printWithColor("lblue", combinedMsg)
 }
 
+// Lbluef 方法用于将传入的参数以亮蓝色文本形式打印到控制台（带占位符）。
 func (c *ColorLib) Lbluef(format string, a ...any) {
 	// 使用 fmt.Sprintf 格式化参数
 	formattedMsg := fmt.Sprintf(format, a...)
@@ -782,6 +815,7 @@ func (c *ColorLib) Lbluef(format string, a ...any) {
 	c.printWithColor("lblue", formattedMsg)
 }
 
+// Slblue 方法用于将传入的参数以亮蓝色文本形式返回（不带占位符）。
 func (c *ColorLib) Slblue(msg ...any) string {
 	if len(msg) == 0 {
 		// 如果没有传入任何参数，直接返回空字符串
@@ -793,6 +827,7 @@ func (c *ColorLib) Slblue(msg ...any) string {
 	return c.returnWithColor("lblue", combinedMsg)
 }
 
+// Slbluef 方法用于将传入的参数以亮蓝色文本形式返回（带占位符）。
 func (c *ColorLib) Slbluef(format string, a ...any) string {
 	// 使用 fmt.Sprintf 格式化参数
 	formattedMsg := fmt.Sprintf(format, a...)
@@ -801,6 +836,7 @@ func (c *ColorLib) Slbluef(format string, a ...any) string {
 	return c.returnWithColor("lblue", formattedMsg)
 }
 
+// Lgreen 方法用于将传入的参数以亮绿色文本形式打印到控制台（不带占位符）。
 func (c *ColorLib) Lpurple(msg ...any) {
 	if len(msg) == 0 {
 		// 如果没有传入任何参数，直接返回
@@ -812,6 +848,7 @@ func (c *ColorLib) Lpurple(msg ...any) {
 	c.printWithColor("lpurple", combinedMsg)
 }
 
+// Lgreenf 方法用于将传入的参数以亮绿色文本形式打印到控制台（带占位符）。
 func (c *ColorLib) Lpurplef(format string, a ...any) {
 	// 使用 fmt.Sprintf 格式化参数
 	formattedMsg := fmt.Sprintf(format, a...)
@@ -820,6 +857,7 @@ func (c *ColorLib) Lpurplef(format string, a ...any) {
 	c.printWithColor("lpurple", formattedMsg)
 }
 
+// Slgreen 方法用于将传入的参数以亮绿色文本形式返回（不带占位符）。
 func (c *ColorLib) Slpurple(msg ...any) string {
 	if len(msg) == 0 {
 		// 如果没有传入任何参数，直接返回空字符串
@@ -831,6 +869,7 @@ func (c *ColorLib) Slpurple(msg ...any) string {
 	return c.returnWithColor("lpurple", combinedMsg)
 }
 
+// Slgreenf 方法用于将传入的参数以亮绿色文本形式返回（带占位符）。
 func (c *ColorLib) Slpurplef(format string, a ...any) string {
 	// 使用 fmt.Sprintf 格式化参数
 	formattedMsg := fmt.Sprintf(format, a...)
@@ -839,6 +878,7 @@ func (c *ColorLib) Slpurplef(format string, a ...any) string {
 	return c.returnWithColor("lpurple", formattedMsg)
 }
 
+// Lcyan 方法用于将传入的参数以亮青色文本形式打印到控制台（不带占位符）。
 func (c *ColorLib) Lcyan(msg ...any) {
 	if len(msg) == 0 {
 		// 如果没有传入任何参数，直接返回
@@ -850,6 +890,7 @@ func (c *ColorLib) Lcyan(msg ...any) {
 	c.printWithColor("lcyan", combinedMsg)
 }
 
+// Lcyanf 方法用于将传入的参数以亮青色文本形式打印到控制台（带占位符）。
 func (c *ColorLib) Lcyanf(format string, a ...any) {
 	// 使用 fmt.Sprintf 格式化参数
 	formattedMsg := fmt.Sprintf(format, a...)
@@ -858,6 +899,7 @@ func (c *ColorLib) Lcyanf(format string, a ...any) {
 	c.printWithColor("lcyan", formattedMsg)
 }
 
+// Slcyan 方法用于将传入的参数以亮青色文本形式返回（不带占位符）。
 func (c *ColorLib) Slcyan(msg ...any) string {
 	if len(msg) == 0 {
 		// 如果没有传入任何参数，直接返回空字符串
@@ -869,6 +911,7 @@ func (c *ColorLib) Slcyan(msg ...any) string {
 	return c.returnWithColor("lcyan", combinedMsg)
 }
 
+// Slcyanf 方法用于将传入的参数以亮青色文本形式返回（带占位符）。
 func (c *ColorLib) Slcyanf(format string, a ...any) string {
 	// 使用 fmt.Sprintf 格式化参数
 	formattedMsg := fmt.Sprintf(format, a...)
@@ -877,6 +920,7 @@ func (c *ColorLib) Slcyanf(format string, a ...any) string {
 	return c.returnWithColor("lcyan", formattedMsg)
 }
 
+// Lwhite 方法用于将传入的参数以亮白色文本形式打印到控制台（不带占位符）。
 func (c *ColorLib) Lwhite(msg ...any) {
 	if len(msg) == 0 {
 		// 如果没有传入任何参数，直接返回
@@ -888,6 +932,7 @@ func (c *ColorLib) Lwhite(msg ...any) {
 	c.printWithColor("lwhite", combinedMsg)
 }
 
+// Lwhitef 方法用于将传入的参数以亮白色文本形式打印到控制台（带占位符）。
 func (c *ColorLib) Lwhitef(format string, a ...any) {
 	// 使用 fmt.Sprintf 格式化参数
 	formattedMsg := fmt.Sprintf(format, a...)
@@ -896,6 +941,7 @@ func (c *ColorLib) Lwhitef(format string, a ...any) {
 	c.printWithColor("lwhite", formattedMsg)
 }
 
+// Slwhite 方法用于将传入的参数以亮白色文本形式返回（不带占位符）。
 func (c *ColorLib) Slwhite(msg ...any) string {
 	if len(msg) == 0 {
 		// 如果没有传入任何参数，直接返回空字符串
@@ -907,6 +953,7 @@ func (c *ColorLib) Slwhite(msg ...any) string {
 	return c.returnWithColor("lwhite", combinedMsg)
 }
 
+// Slwhitef 方法用于将传入的参数以亮白色文本形式返回（带占位符）。
 func (c *ColorLib) Slwhitef(format string, a ...any) string {
 	// 使用 fmt.Sprintf 格式化参数
 	formattedMsg := fmt.Sprintf(format, a...)
