@@ -69,6 +69,18 @@ func TestColorLib(t *testing.T) {
 	// 测试调试方法
 	cl.PrintDebug("这是一条调试消息")
 	cl.PrintDebugf("这是一条 %s 调试消息", "格式化")
+	// 测试错误方法
+	cl.PrintError("这是一条错误消息")
+	cl.PrintErrorf("这是一条 %s 错误消息", "格式化")
+	// 测试信息方法
+	cl.PrintInfo("这是一条信息消息")
+	cl.PrintInfof("这是一条 %s 信息消息", "格式化")
+	// 测试成功方法
+	cl.PrintSuccess("这是一条成功消息")
+	cl.PrintSuccessf("这是一条 %s 成功消息", "格式化")
+	// 测试警告方法
+	cl.PrintWarning("这是一条警告消息")
+	cl.PrintWarningf("这是一条 %s 警告消息", "格式化")
 
 	// 新加的简洁方法测试
 	println("简洁方法测试：")
@@ -77,7 +89,7 @@ func TestColorLib(t *testing.T) {
 	cl.PrintErr("这是一条错误消息")
 	cl.PrintErrf("这是一条 %s 错误消息", "格式化")
 	cl.PrintInf("这是一条信息消息")
-	cl.PrintInfof("这是一条 %s 信息消息", "格式化")
+	cl.PrintInff("这是一条 %s 信息消息", "格式化")
 	cl.PrintOk("这是一条成功消息")
 	cl.PrintOkf("这是一条 %s 成功消息", "格式化")
 	cl.PrintWarn("这是一条警告消息")
