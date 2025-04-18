@@ -119,7 +119,7 @@ func NewColorLib() *ColorLib {
 			"err":  "err: ",
 			"inf":  "info: ",
 			"dbg":  "debug: ",
-			"warn": "warn:",
+			"warn": "warn: ",
 		},
 		// LevelMap 是一个映射，用于将日志级别映射到对应的前缀。
 		LevelMap: map[string]string{
