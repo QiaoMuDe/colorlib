@@ -94,4 +94,6 @@ func TestColorLib(t *testing.T) {
 	cl.PrintOkf("这是一条 %s 成功消息", "格式化")
 	cl.PrintWarn("这是一条警告消息")
 	cl.PrintWarnf("这是一条 %s 警告消息", "格式化")
+
+	// 测试仓库镜像同步
 }
