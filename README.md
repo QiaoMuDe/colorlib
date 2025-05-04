@@ -165,6 +165,29 @@
 | `Slcyanf(format string, a ...any)`   | 返回构造后的亮青色字符串（带占位符） |
 | `Slwhitef(format string, a ...any)`  | 返回构造后的亮白色字符串（带占位符） |
 
+## NoColor功能
+
+`ColorLib`支持通过设置`NoColor`属性为`true`来全局禁用颜色输出。当`NoColor`为`true`时，所有颜色相关方法将直接输出原始文本，不添加任何颜色代码。
+
+### 使用方法
+
+```go
+cl := NewColorLib()
+cl.NoColor = true // 禁用颜色输出
+
+// 此时所有打印方法将输出无颜色文本
+cl.Red("这条消息将不会显示红色")
+cl.PrintSuccess("这条成功消息也不会有颜色")
+
+// 重新启用颜色输出
+cl.NoColor = false
+```
+
+### 使用场景
+- 当终端不支持ANSI颜色代码时
+- 需要将输出重定向到文件时
+- 其他需要禁用颜色的场景
+
 ## 下载和使用
 
 ### 下载

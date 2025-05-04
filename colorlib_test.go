@@ -2,6 +2,7 @@ package colorlib
 
 import (
 	"fmt"
+	"strings"
 	"testing"
 )
 
@@ -83,7 +84,6 @@ func TestColorLib(t *testing.T) {
 	cl.PrintWarningf("这是一条 %s 警告消息", "格式化")
 
 	// 新加的简洁方法测试
-	println("简洁方法测试：")
 	cl.PrintDbg("这是一条调试消息")
 	cl.PrintDbgf("这是一条 %s 调试消息", "格式化")
 	cl.PrintErr("这是一条错误消息")
@@ -96,4 +96,46 @@ func TestColorLib(t *testing.T) {
 	cl.PrintWarnf("这是一条 %s 警告消息", "格式化")
 
 	// 测试仓库镜像同步
+}
+
+func TestNoColor(t *testing.T) {
+	// 测试NoColor为true时
+	cl := NewColorLib()
+	cl.NoColor = true
+
+	// 测试所有颜色方法在NoColor=true时的行为
+	colors := []string{"black", "red", "green", "yellow", "blue", "purple", "cyan", "white", "gray", "lred", "lgreen", "lyellow", "lblue", "lpurple", "lcyan", "lwhite"}
+	for _, color := range colors {
+		t.Run(color, func(t *testing.T) {
+			// 测试打印方法
+			cl.printWithColor(color, "这是一条测试消息")
+			// 测试返回方法
+			msg := cl.returnWithColor(color, "这是一条测试消息")
+			if msg == "" {
+				t.Errorf("returnWithColor(%s) 返回了一个空字符串", color)
+			}
+		})
+	}
+
+	// 测试所有快捷方法
+	cl.PrintDebug("调试消息")
+	cl.PrintError("错误消息")
+	cl.PrintInfo("信息消息")
+	cl.PrintSuccess("成功消息")
+	cl.PrintWarning("警告消息")
+
+	// 测试所有简洁方法
+	cl.PrintDbg("调试消息")
+	cl.PrintErr("错误消息")
+	cl.PrintInf("信息消息")
+	cl.PrintOk("成功消息")
+	cl.PrintWarn("警告消息")
+
+	// 测试NoColor为false时
+	cl.NoColor = false
+	// 验证颜色功能恢复
+	msg := cl.returnWithColor("red", "红色消息")
+	if !strings.Contains(msg, "\033") {
+		t.Error("NoColor=false时未正确添加颜色代码")
+	}
 }

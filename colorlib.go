@@ -10,6 +10,7 @@ type ColorLib struct {
 	LevelMap map[string]string // LevelMap 是一个映射，用于将日志级别映射到对应的前缀,// 日志级别映射到对应的前缀, 后面留空, 方便后面拼接提示内容
 	ColorMap map[string]string // colorMap 是一个映射，用于将颜色名称映射到对应的 ANSI 颜色代码。
 	LvlMap   map[string]string // LvlMap 是一个映射，用于将日志级别映射到对应的日志级别名称。
+	NoColor  bool              // NoColor 控制是否禁用颜色输出
 }
 
 // ColorLibInterface 是一个接口，定义了一组方法，用于打印和返回带有颜色的文本。
@@ -156,6 +157,11 @@ func NewColorLib() *ColorLib {
 
 // printWithColor 方法用于将传入的参数以指定颜色文本形式打印到控制台。
 func (c *ColorLib) printWithColor(color string, msg ...any) {
+	if c.NoColor {
+		fmt.Println(msg...)
+		return
+	}
+
 	// 获取颜色代码
 	code, ok := c.ColorMap[color]
 	if !ok {
@@ -180,6 +186,10 @@ func (c *ColorLib) printWithColor(color string, msg ...any) {
 
 // returnWithColor 方法用于将传入的参数以指定颜色文本形式返回。
 func (c *ColorLib) returnWithColor(color string, msg ...any) string {
+	if c.NoColor {
+		return fmt.Sprint(msg...)
+	}
+
 	// 获取颜色代码
 	code, ok := c.ColorMap[color]
 	if !ok {
@@ -194,4 +204,74 @@ func (c *ColorLib) returnWithColor(color string, msg ...any) string {
 	// 使用 fmt.Sprint 将所有参数拼接成一个字符串
 	combinedMsg := fmt.Sprint(msg...)
 	return fmt.Sprintf("\033[1;%sm%s\033[0m", code, combinedMsg)
+}
+
+// PromptMsg 方法用于打印带有颜色和前缀的消息。
+func (c *ColorLib) PromptMsg(level, color, format string, a ...any) {
+	// 获取指定级别对应的前缀
+	prefix, ok := c.LevelMap[level]
+	if !ok {
+		fmt.Println("Invalid level:", level)
+		return
+	}
+
+	// 创建一个 strings.Builder 来构建消息
+	var message strings.Builder
+	message.WriteString(prefix)
+
+	// 如果没有参数，直接打印前缀
+	if len(a) == 0 {
+		if c.NoColor {
+			fmt.Println(message.String())
+		} else {
+			c.printWithColor(color, message.String())
+		}
+		return
+	}
+
+	// 使用 fmt.Sprint 将所有参数拼接成一个字符串
+	combinedMsg := fmt.Sprintf(format, a...)
+	message.WriteString(combinedMsg)
+
+	// 打印最终消息
+	if c.NoColor {
+		fmt.Println(message.String())
+	} else {
+		c.printWithColor(color, message.String())
+	}
+}
+
+// PMsg 方法用于打印带有颜色和前缀的消息。
+func (c *ColorLib) PMsg(level, color, format string, a ...any) {
+	// 获取指定级别对应的前缀
+	prefix, ok := c.LvlMap[level]
+	if !ok {
+		fmt.Println("Invalid level:", level)
+		return
+	}
+
+	// 创建一个 strings.Builder 来构建消息
+	var message strings.Builder
+	message.WriteString(prefix)
+
+	// 如果没有参数，直接打印前缀
+	if len(a) == 0 {
+		if c.NoColor {
+			fmt.Println(message.String())
+		} else {
+			c.printWithColor(color, message.String())
+		}
+		return
+	}
+
+	// 使用 fmt.Sprint 将所有参数拼接成一个字符串
+	combinedMsg := fmt.Sprintf(format, a...)
+	message.WriteString(combinedMsg)
+
+	// 打印最终消息
+	if c.NoColor {
+		fmt.Println(message.String())
+	} else {
+		c.printWithColor(color, message.String())
+	}
 }

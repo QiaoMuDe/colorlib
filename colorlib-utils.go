@@ -2,7 +2,6 @@ package colorlib
 
 import (
 	"fmt"
-	"strings"
 )
 
 // Bluef 方法用于将传入的参数以蓝色文本形式打印到控制台（带占位符）。
@@ -212,60 +211,6 @@ func (c *ColorLib) Spurple(msg ...any) string {
 	// 使用 fmt.Sprint 将所有参数拼接成一个字符串
 	combinedMsg := fmt.Sprint(msg...)
 	return c.returnWithColor("purple", combinedMsg)
-}
-
-// PromptMsg 方法用于打印带有颜色和前缀的消息。
-func (c *ColorLib) PromptMsg(level, color, format string, a ...any) {
-	// 获取指定级别对应的前缀
-	prefix, ok := c.LevelMap[level]
-	if !ok {
-		fmt.Println("Invalid level:", level)
-		return
-	}
-
-	// 创建一个 strings.Builder 来构建消息
-	var message strings.Builder
-	message.WriteString(prefix)
-
-	// 如果没有参数，直接打印前缀
-	if len(a) == 0 {
-		c.printWithColor(color, message.String())
-		return
-	}
-
-	// 使用 fmt.Sprint 将所有参数拼接成一个字符串
-	combinedMsg := fmt.Sprintf(format, a...)
-	message.WriteString(combinedMsg)
-
-	// 打印最终消息
-	c.printWithColor(color, message.String())
-}
-
-// PMsg 方法用于打印带有颜色和前缀的消息。
-func (c *ColorLib) PMsg(level, color, format string, a ...any) {
-	// 获取指定级别对应的前缀
-	prefix, ok := c.LvlMap[level]
-	if !ok {
-		fmt.Println("Invalid level:", level)
-		return
-	}
-
-	// 创建一个 strings.Builder 来构建消息
-	var message strings.Builder
-	message.WriteString(prefix)
-
-	// 如果没有参数，直接打印前缀
-	if len(a) == 0 {
-		c.printWithColor(color, message.String())
-		return
-	}
-
-	// 使用 fmt.Sprint 将所有参数拼接成一个字符串
-	combinedMsg := fmt.Sprintf(format, a...)
-	message.WriteString(combinedMsg)
-
-	// 打印最终消息
-	c.printWithColor(color, message.String())
 }
 
 // PrintSuccessf 方法用于将传入的参数以绿色文本形式打印到控制台，并在文本前添加一个表示成功的标志（带占位符）。
