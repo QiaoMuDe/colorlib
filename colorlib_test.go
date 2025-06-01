@@ -106,9 +106,9 @@ func TestNoColor(t *testing.T) {
 	for _, color := range colors {
 		t.Run(color, func(t *testing.T) {
 			// 测试打印方法
-			cl.printWithColor(color, "这是一条测试消息\n")
+			cl.printWithColor(color, "这是一条禁用颜色的消息\n")
 			// 测试返回方法
-			msg := cl.returnWithColor(color, "这是一条测试消息")
+			msg := cl.returnWithColor(color, "这是一条禁用颜色的消息")
 			if msg == "" {
 				t.Errorf("returnWithColor(%s) 返回了一个空字符串", color)
 			}
@@ -116,18 +116,18 @@ func TestNoColor(t *testing.T) {
 	}
 
 	// 测试所有快捷方法
-	cl.PrintDebug("调试消息")
-	cl.PrintError("错误消息")
-	cl.PrintInfo("信息消息")
-	cl.PrintSuccess("成功消息")
-	cl.PrintWarning("警告消息")
+	cl.PrintDebug("调试消息(禁用颜色)")
+	cl.PrintError("错误消息(禁用颜色)")
+	cl.PrintInfo("信息消息(禁用颜色)")
+	cl.PrintSuccess("成功消息(禁用颜色)")
+	cl.PrintWarning("警告消息(禁用颜色)")
 
 	// 测试所有简洁方法
-	cl.PrintDbg("调试消息")
-	cl.PrintErr("错误消息")
-	cl.PrintInf("信息消息")
-	cl.PrintOk("成功消息")
-	cl.PrintWarn("警告消息")
+	cl.PrintDbg("调试消息(禁用颜色)")
+	cl.PrintErr("错误消息(禁用颜色)")
+	cl.PrintInf("信息消息(禁用颜色)")
+	cl.PrintOk("成功消息(禁用颜色)")
+	cl.PrintWarn("警告消息(禁用颜色)")
 
 	// 测试NoColor为false时
 	cl.NoColor = false
