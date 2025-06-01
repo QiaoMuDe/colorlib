@@ -49,7 +49,7 @@
 | err      | err:      |
 | warn     | warn:     |
 | inf      | info:     |
-| dbg      | dbg:      |
+| dbg      | debug:      |
 
 ## 内置的函数
 
@@ -214,7 +214,7 @@ func main() {
 
 	// 打印带有颜色的文本
 	cl.Blue("这是一条蓝色的消息")
-	cl.Greenf("这是一条绿色的消息：%s", "Hello, ColorLib!")
+	cl.Greenf("这是一条绿色的消息：%s\n", "Hello, ColorLib!")
 
 	// 返回带有颜色的字符串
 	coloredString := cl.Sred("这是一条红色的字符串")
@@ -237,7 +237,7 @@ func main() {
 ```go
 cl := colorlib.NewColorLib()
 cl.Blue("蓝色文本")
-cl.Greenf("绿色文本：%s", "带占位符")
+cl.Greenf("绿色文本：%s\n", "带占位符")
 ```
 
 ### 返回彩色字符串
@@ -256,3 +256,13 @@ cl.PrintWarning("警告：磁盘空间不足")
 cl.PrintInfo("正在处理数据...")
 cl.PrintDebug("正在测试...")
 ```
+
+### 打印简洁版终端提示信息
+
+```go
+cl.PrintOk("操作成功")
+cl.PrintErr("发生错误")
+cl.PrintWarn("警告")
+cl.PrintInf("信息")
+cl.PrintDbg("调试信息")
+ ```
