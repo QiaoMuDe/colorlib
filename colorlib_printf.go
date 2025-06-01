@@ -1,6 +1,8 @@
 package colorlib
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // Bluef 方法用于将传入的参数以蓝色文本形式打印到控制台（带占位符）。
 func (c *ColorLib) Bluef(format string, a ...any) {
@@ -47,31 +49,6 @@ func (c *ColorLib) Purplef(format string, a ...any) {
 	c.printWithColor("purple", formattedMsg)
 }
 
-// PrintSuccessf 方法用于将传入的参数以绿色文本形式打印到控制台，并在文本前添加一个表示成功的标志（带占位符）。
-func (c *ColorLib) PrintSuccessf(format string, a ...any) {
-	c.PromptMsg("success", "green", format, a...)
-}
-
-// PrintErrorf 方法用于将传入的参数以红色文本形式打印到控制台，并在文本前添加一个表示错误的标志（带占位符）。
-func (c *ColorLib) PrintErrorf(format string, a ...any) {
-	c.PromptMsg("error", "red", format, a...)
-}
-
-// PrintWarningf 方法用于将传入的参数以黄色文本形式打印到控制台，并在文本前添加一个表示警告的标志（带占位符）。
-func (c *ColorLib) PrintWarningf(format string, a ...any) {
-	c.PromptMsg("warning", "yellow", format, a...)
-}
-
-// PrintInfof 方法用于将传入的参数以蓝色文本形式打印到控制台，并在文本前添加一个表示信息的标志（带占位符）。
-func (c *ColorLib) PrintInfof(format string, a ...any) {
-	c.PromptMsg("info", "blue", format, a...)
-}
-
-// PrintDebugf 方法用于将传入的参数以紫色文本形式打印到控制台，并在文本前添加一个表示调试的标志（带占位符）。
-func (c *ColorLib) PrintDebugf(format string, a ...any) {
-	c.PromptMsg("debug", "purple", format, a...)
-}
-
 // Blackf 方法用于将传入的参数以黑色文本形式打印到控制台（带占位符）。
 func (c *ColorLib) Blackf(format string, a ...any) {
 	// 使用 fmt.Sprintf 格式化参数
@@ -106,6 +83,31 @@ func (c *ColorLib) Grayf(format string, a ...any) {
 
 	// 调用 printWithColor 方法，传入格式化后的字符串
 	c.printWithColor("gray", formattedMsg)
+}
+
+// PrintSuccessf 方法用于将传入的参数以绿色文本形式打印到控制台，并在文本前添加一个表示成功的标志（带占位符）。
+func (c *ColorLib) PrintSuccessf(format string, a ...any) {
+	c.PromptMsg("success", "green", format, a...)
+}
+
+// PrintErrorf 方法用于将传入的参数以红色文本形式打印到控制台，并在文本前添加一个表示错误的标志（带占位符）。
+func (c *ColorLib) PrintErrorf(format string, a ...any) {
+	c.PromptMsg("error", "red", format, a...)
+}
+
+// PrintWarningf 方法用于将传入的参数以黄色文本形式打印到控制台，并在文本前添加一个表示警告的标志（带占位符）。
+func (c *ColorLib) PrintWarningf(format string, a ...any) {
+	c.PromptMsg("warning", "yellow", format, a...)
+}
+
+// PrintInfof 方法用于将传入的参数以蓝色文本形式打印到控制台，并在文本前添加一个表示信息的标志（带占位符）。
+func (c *ColorLib) PrintInfof(format string, a ...any) {
+	c.PromptMsg("info", "blue", format, a...)
+}
+
+// PrintDebugf 方法用于将传入的参数以紫色文本形式打印到控制台，并在文本前添加一个表示调试的标志（带占位符）。
+func (c *ColorLib) PrintDebugf(format string, a ...any) {
+	c.PromptMsg("debug", "purple", format, a...)
 }
 
 // Lredf 方法用于将传入的参数以亮红色文本形式打印到控制台（带占位符）。

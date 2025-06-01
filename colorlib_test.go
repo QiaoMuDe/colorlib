@@ -137,3 +137,46 @@ func TestNoColor(t *testing.T) {
 		t.Error("NoColor=false时未正确添加颜色代码")
 	}
 }
+
+// TestNoBold 测试禁用字体加粗的功能
+func TestNoBold(t *testing.T) {
+	// 创建 ColorLib 实例
+	cl := NewColorLib()
+	cl.NoBold = true
+
+	// 测试禁用粗体时的输出
+	msg := cl.returnWithColor("red", "测试禁用粗体")
+	if strings.Contains(msg, "1;") {
+		t.Error("NoBold=true 时仍然包含粗体代码")
+	}
+
+	// 测试启用粗体时的输出
+	cl.NoBold = false
+	msg = cl.returnWithColor("red", "测试启用粗体")
+	if !strings.Contains(msg, "1;") {
+		t.Error("NoBold=false 时未包含粗体代码")
+	}
+
+	// 测试颜色
+	colors := []string{"black", "red", "green", "yellow", "blue", "purple", "cyan", "white", "gray", "lred", "lgreen", "lyellow", "lblue", "lpurple", "lcyan", "lwhite"}
+	for _, color := range colors {
+		t.Run(color, func(t *testing.T) {
+			// 测试打印方法
+			cl.printWithColor(color, "这是一条禁用字体加粗的消息\n")
+			// 测试返回方法
+			msg := cl.returnWithColor(color, "这是一条禁用字体加粗的消息")
+			if msg == "" {
+				t.Errorf("returnWithColor(%s) 返回了一个空字符串", color)
+			}
+		})
+	}
+}
+
+func TestNoBold2(t *testing.T) {
+	cl := NewColorLib()
+	cl.NoBold = true
+
+	cl.PrintOk("这是一条禁用字体加粗的消息")
+	cl.NoBold = false
+	cl.PrintOk("这是一条启用字体加粗的消息")
+}

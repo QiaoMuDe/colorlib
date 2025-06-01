@@ -12,6 +12,7 @@ type ColorLib struct {
 	LvlMap       map[string]string // LvlMap 是一个映射，用于将日志级别映射到对应的日志级别名称。
 	NoColor      bool              // NoColor 控制是否禁用颜色输出
 	formatBuffer strings.Builder   // formatBuffer 用于构建格式化后的字符串。
+	NoBold       bool              // NoBold 控制是否禁用字体加粗
 }
 
 // ColorLibInterface 是一个接口，定义了一组方法，用于打印和返回带有颜色的文本。
@@ -174,8 +175,14 @@ func (c *ColorLib) printWithColor(color string, msg ...any) {
 	// 清理缓冲区
 	c.formatBuffer.Reset()
 
-	// 写入前缀
-	c.formatBuffer.WriteString(fmt.Sprintf("\033[1;%sm", code))
+	// 检查是否禁用粗体输出
+	if c.NoBold {
+		// 写入前缀
+		c.formatBuffer.WriteString(fmt.Sprintf("\033[%sm", code))
+	} else {
+		// 写入前缀
+		c.formatBuffer.WriteString(fmt.Sprintf("\033[1;%sm", code))
+	}
 
 	// 写入消息
 	if len(msg) > 0 {
@@ -209,7 +216,11 @@ func (c *ColorLib) returnWithColor(color string, msg ...any) string {
 
 	// 检查 msg 是否为空
 	if len(msg) == 0 {
-		return fmt.Sprintf("\033[1;%sm\033[0m", code) // 返回空字符串，但带有颜色代码
+		if c.NoBold {
+			return fmt.Sprintf("\033[%sm\033[0m", code) // 返回空字符串，但带有颜色代码
+		} else {
+			return fmt.Sprintf("\033[1;%sm\033[0m", code) // 返回空字符串，但带有颜色代码
+		}
 	}
 
 	// 使用 fmt.Sprint 将所有参数拼接成一个字符串
@@ -219,7 +230,11 @@ func (c *ColorLib) returnWithColor(color string, msg ...any) string {
 	c.formatBuffer.Reset()
 
 	// 写入前缀
-	c.formatBuffer.WriteString(fmt.Sprintf("\033[1;%sm", code)) // 添加颜色代码，并加粗
+	if c.NoBold {
+		c.formatBuffer.WriteString(fmt.Sprintf("\033[%sm", code))
+	} else {
+		c.formatBuffer.WriteString(fmt.Sprintf("\033[1;%sm", code)) // 添加颜色代码，并加粗
+	}
 
 	// 写入消息
 	c.formatBuffer.WriteString(combinedMsg) // 拼接消息内容
