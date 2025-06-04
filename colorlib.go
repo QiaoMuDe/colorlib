@@ -14,6 +14,8 @@ type ColorLib struct {
 	NoColor      bool              // NoColor 控制是否禁用颜色输出
 	formatBuffer strings.Builder   // formatBuffer 用于构建格式化后的字符串。
 	NoBold       bool              // NoBold 控制是否禁用字体加粗
+	Underline    bool              // Underline 控制是否启用下划线
+	Blink        bool              // Blink 控制是否启用闪烁效果
 }
 
 const (

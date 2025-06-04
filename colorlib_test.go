@@ -198,3 +198,44 @@ func TestGlobalInstance(t *testing.T) {
 		t.Error("Sgreen方法返回了一个空字符串")
 	}
 }
+
+// TestUnderlineAndBlink 测试下划线和闪烁属性
+func TestUnderlineAndBlink(t *testing.T) {
+	cl := NewColorLib()
+
+	// 测试下划线
+	cl.Underline = true
+	fmt.Println("=== 下划线效果测试 ===")
+	cl.printWithColor("red", "这是一条带下划线的红色消息\n")
+	msg := cl.returnWithColor("red", "带下划线的消息")
+	if !strings.Contains(msg, "4;") {
+		t.Error("未正确添加下划线代码")
+	}
+
+	// 测试闪烁
+	cl.Blink = true
+	fmt.Println("\n=== 闪烁效果测试 ===")
+	cl.printWithColor("blue", "这是一条带闪烁的蓝色消息\n")
+	msg = cl.returnWithColor("blue", "带闪烁的消息")
+	if !strings.Contains(msg, "5;") {
+		t.Error("未正确添加闪烁代码")
+	}
+
+	// 测试同时启用下划线和闪烁
+	fmt.Println("\n=== 下划线+闪烁效果测试 ===")
+	cl.printWithColor("green", "这是一条同时带下划线和闪烁的绿色消息\n")
+	msg = cl.returnWithColor("green", "带下划线和闪烁的消息")
+	if !strings.Contains(msg, "4;") || !strings.Contains(msg, "5;") {
+		t.Error("未正确添加下划线和闪烁代码")
+	}
+
+	// 测试禁用下划线和闪烁
+	cl.Underline = false
+	cl.Blink = false
+	fmt.Println("\n=== 普通效果测试 ===")
+	cl.printWithColor("yellow", "这是一条普通黄色消息\n")
+	msg = cl.returnWithColor("yellow", "普通消息")
+	if strings.Contains(msg, "4;") || strings.Contains(msg, "5;") {
+		t.Error("错误地添加了下划线或闪烁代码")
+	}
+}

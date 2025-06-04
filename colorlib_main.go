@@ -1,6 +1,9 @@
 package colorlib
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 // NewColorLib 函数用于创建一个新的 ColorLib 实例
 func NewColorLib() *ColorLib {
@@ -41,14 +44,21 @@ func (c *ColorLib) printWithColor(color string, msg ...any) {
 	// 清理缓冲区
 	c.formatBuffer.Reset()
 
-	// 检查是否禁用粗体输出
-	if c.NoBold {
-		// 写入前缀
-		c.formatBuffer.WriteString(fmt.Sprintf("\033[%dm", code))
-	} else {
-		// 写入前缀
-		c.formatBuffer.WriteString(fmt.Sprintf("\033[1;%dm", code))
+	// 构建ANSI控制序列
+	var ansiCodes []string
+	if !c.NoBold {
+		ansiCodes = append(ansiCodes, "1")
 	}
+	if c.Underline {
+		ansiCodes = append(ansiCodes, "4")
+	}
+	if c.Blink {
+		ansiCodes = append(ansiCodes, "5")
+	}
+	ansiCodes = append(ansiCodes, fmt.Sprintf("%d", code))
+
+	// 写入前缀
+	c.formatBuffer.WriteString(fmt.Sprintf("\033[%sm", strings.Join(ansiCodes, ";")))
 
 	// 写入消息
 	if len(msg) > 0 {
@@ -82,11 +92,19 @@ func (c *ColorLib) returnWithColor(color string, msg ...any) string {
 
 	// 检查 msg 是否为空
 	if len(msg) == 0 {
-		if c.NoBold {
-			return fmt.Sprintf("\033[%dm\033[%dm", code, reset) // 返回空字符串，但带有颜色代码
-		} else {
-			return fmt.Sprintf("\033[1;%dm\033[%dm", code, reset) // 返回空字符串，但带有颜色代码
+		// 构建ANSI控制序列
+		var ansiCodes []string
+		if !c.NoBold {
+			ansiCodes = append(ansiCodes, "1")
 		}
+		if c.Underline {
+			ansiCodes = append(ansiCodes, "4")
+		}
+		if c.Blink {
+			ansiCodes = append(ansiCodes, "5")
+		}
+		ansiCodes = append(ansiCodes, fmt.Sprintf("%d", code))
+		return fmt.Sprintf("\033[%sm\033[%dm", strings.Join(ansiCodes, ";"), reset)
 	}
 
 	// 使用 fmt.Sprint 将所有参数拼接成一个字符串
@@ -95,12 +113,21 @@ func (c *ColorLib) returnWithColor(color string, msg ...any) string {
 	// 清理缓冲区
 	c.formatBuffer.Reset()
 
-	// 写入前缀
-	if c.NoBold {
-		c.formatBuffer.WriteString(fmt.Sprintf("\033[%dm", code))
-	} else {
-		c.formatBuffer.WriteString(fmt.Sprintf("\033[1;%dm", code)) // 添加颜色代码，并加粗
+	// 构建ANSI控制序列
+	var ansiCodes []string
+	if !c.NoBold {
+		ansiCodes = append(ansiCodes, "1")
 	}
+	if c.Underline {
+		ansiCodes = append(ansiCodes, "4")
+	}
+	if c.Blink {
+		ansiCodes = append(ansiCodes, "5")
+	}
+	ansiCodes = append(ansiCodes, fmt.Sprintf("%d", code))
+
+	// 写入前缀
+	c.formatBuffer.WriteString(fmt.Sprintf("\033[%sm", strings.Join(ansiCodes, ";")))
 
 	// 写入消息
 	c.formatBuffer.WriteString(combinedMsg) // 拼接消息内容

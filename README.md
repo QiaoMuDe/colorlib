@@ -65,6 +65,8 @@
 | :------- | :---------------- | :------------- |
 | NoColor  | bool              | 是否禁用颜色   |
 | NoBold   | bool              | 是否禁用加粗   |
+| Underline | bool              | 是否启用下划线 |
+| Blink    | bool              | 是否启用闪烁   |
 
 `ColorLib` 结构体实现了以下方法：
 
