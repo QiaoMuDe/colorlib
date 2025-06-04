@@ -146,7 +146,7 @@ func (c *ColorLib) Lbluef(format string, a ...any) {
 	c.printWithColor("lblue", formattedMsg)
 }
 
-// Lgreenf 方法用于将传入的参数以亮绿色文本形式打印到控制台（带占位符）。
+// Lgreenf 方法用于将传入的参数以亮紫色文本形式打印到控制台（带占位符）。
 func (c *ColorLib) Lpurplef(format string, a ...any) {
 	// 使用 fmt.Sprintf 格式化参数
 	formattedMsg := fmt.Sprintf(format, a...)

@@ -242,7 +242,7 @@ func (c *ColorLib) Lblue(msg ...any) {
 	c.printWithColor("lblue", combinedMsg)
 }
 
-// Lgreen 方法用于将传入的参数以亮绿色文本形式打印到控制台（不带占位符）。
+// Lgreen 方法用于将传入的参数以亮紫色文本形式打印到控制台（不带占位符）。
 func (c *ColorLib) Lpurple(msg ...any) {
 	if len(msg) == 0 {
 		// 如果没有传入任何参数，直接返回

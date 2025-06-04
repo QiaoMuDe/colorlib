@@ -180,3 +180,21 @@ func TestNoBold2(t *testing.T) {
 	cl.NoBold = false
 	cl.PrintOk("这是一条启用字体加粗的消息")
 }
+
+// TestGlobalInstance 测试全局实例CL的功能
+func TestGlobalInstance(t *testing.T) {
+	// 测试打印方法
+	CL.PrintDebug("这是一条来自全局实例的调试消息")
+	CL.PrintError("这是一条来自全局实例的错误消息")
+	CL.PrintInfo("这是一条来自全局实例的信息消息")
+
+	// 测试颜色方法
+	CL.Blue("这是一条来自全局实例的蓝色消息")
+	CL.Red("这是一条来自全局实例的红色消息")
+
+	// 测试返回方法
+	msg := CL.Sgreen("这是一条来自全局实例的绿色字符串")
+	if msg == "" {
+		t.Error("Sgreen方法返回了一个空字符串")
+	}
+}

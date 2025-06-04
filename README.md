@@ -206,6 +206,7 @@ cl.NoColor = false
 go get gitee.com/MM-Q/colorlib
 ```
 
+## 下载和使用
 ### 引入和使用
 
 在您的 Go 代码中引入 `ColorLib`：
@@ -218,6 +219,12 @@ import (
 )
 
 func main() {
+	// 使用全局实例CL（无需初始化）
+	colorlib.CL.PrintDebug("这是一条来自全局实例的调试消息")
+	colorlib.CL.PrintError("这是一条来自全局实例的错误消息")
+	colorlib.CL.Blue("这是一条来自全局实例的蓝色消息")
+	
+	// 或者创建新的实例
 	cl := colorlib.NewColorLib()
 
 	// 打印带有颜色的文本
@@ -234,6 +241,21 @@ func main() {
 	cl.PrintWarning("请注意：这是一个警告")
 	cl.PrintInfo("这是一条普通信息")
 }
+```
+
+### 全局实例
+
+ColorLib 提供了一个预初始化的全局实例 `CL`，可以直接使用而无需调用 `NewColorLib()`。
+
+```go
+// 使用全局实例
+colorlib.CL.PrintSuccess("操作成功！")
+colorlib.CL.PrintError("发生错误")
+colorlib.CL.Blue("蓝色文本")
+
+// 返回带颜色的字符串
+msg := colorlib.CL.Sgreen("绿色字符串")
+fmt.Println(msg)
 ```
 
 ## 常用用法
