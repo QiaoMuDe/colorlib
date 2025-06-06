@@ -5,6 +5,14 @@ import (
 	"strings"
 )
 
+// GetCL 是一个线程安全用于获取全局 ColorLib 实例的函数
+func GetCL() *ColorLib {
+	once.Do(func() {
+		CL = NewColorLib()
+	})
+	return CL
+}
+
 // NewColorLib 函数用于创建一个新的 ColorLib 实例
 func NewColorLib() *ColorLib {
 	// 创建一个新的 ColorLib 实例

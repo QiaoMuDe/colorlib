@@ -2,14 +2,24 @@ package colorlib
 
 import (
 	"strings"
+	"sync"
 )
 
-// 全局实例可导入直接使用
-var CL = NewColorLib()
+var (
+	CL   *ColorLib // 全局实例可导入直接使用
+	once sync.Once // 确保全局实例只被初始化一次
+)
+
+// init 函数用于初始化全局 ColorLib 实例
+func init() {
+	once.Do(func() {
+		CL = NewColorLib()
+	})
+}
 
 // ColorLib 结构体用于管理颜色输出和日志级别映射。
 type ColorLib struct {
-	levelMap     map[string]string // LevelMap 是一个映射，用于将日志级别映射到对应的前缀,// 日志级别映射到对应的前缀, 后面留空, 方便后面拼接提示内容
+	levelMap     map[string]string // LevelMap 是一个映射，用于将日志级别映射到对应的前缀
 	colorMap     map[string]int    // colorMap 是一个映射，用于将颜色名称映射到对应的 ANSI 颜色代码。
 	NoColor      bool              // NoColor 控制是否禁用颜色输出
 	formatBuffer strings.Builder   // formatBuffer 用于构建格式化后的字符串。
