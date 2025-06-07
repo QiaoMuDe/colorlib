@@ -7,6 +7,25 @@ import (
 	"testing"
 )
 
+// TestGlobalInstance 测试全局实例CL的功能
+func TestConcurrencySafety(t *testing.T) {
+	fmt.Println("=== 并发安全测试 ===")
+	cl := NewColorLib()
+	var wg sync.WaitGroup
+
+	for i := 0; i < 100; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			cl.PrintInfo("并发测试")
+			cl.Sgreen("并发字符串")
+		}()
+	}
+
+	wg.Wait()
+}
+
+// TestColorLib 测试ColorLib的功能
 func TestColorLib(t *testing.T) {
 	cl := NewColorLib()
 
@@ -241,20 +260,8 @@ func TestUnderlineAndBlink(t *testing.T) {
 	}
 }
 
-// TestGlobalInstance 测试全局实例CL的功能
-func TestConcurrencySafety(t *testing.T) {
-	fmt.Println("=== 并发安全测试 ===")
-	cl := NewColorLib()
-	var wg sync.WaitGroup
-
-	for i := 0; i < 100; i++ {
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
-			cl.PrintInfo("并发测试")
-			cl.Sgreen("并发字符串")
-		}()
-	}
-
-	wg.Wait()
+// 测试终端是否支持ANSI转义字符
+func TestTerminalSupport(t *testing.T) {
+	fmt.Println("=== 终端支持测试 ===")
+	fmt.Printf("终端是否支持ANSI转义字符: %v\n", isTerminalSupportANSI())
 }
