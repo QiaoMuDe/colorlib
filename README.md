@@ -11,6 +11,7 @@
 - 支持全局实例和自定义实例
 - 可控制颜色、加粗、下划线、闪烁等文本效果
 - 支持禁用颜色输出（NoColor模式）
+- 内置并发安全测试，可通过 `-race` 参数进行竞态检测
 
 ## 定义的颜色和数字
 
@@ -67,12 +68,14 @@ ColorLib 提供了一个预初始化的全局实例 `CL`，可以直接使用而
 ## ColorLib 结构体
 `ColorLib` 结构体用于管理颜色输出和文本效果。
 
-| 字段名称  | 字段类型 | 字段描述                     |
-| :-------- | :------- | :--------------------------- |
-| NoColor   | bool     | 是否禁用所有颜色输出         |
-| NoBold    | bool     | 是否禁用文本加粗效果         |
-| Underline | bool     | 是否启用文本下划线效果       |
-| Blink     | bool     | 是否启用文本闪烁效果         |
+| 字段名称  | 字段类型       | 字段描述                     |
+| :-------- | :------------- | :--------------------------- |
+| NoColor   | atomic.Bool    | 原子操作控制是否禁用颜色输出 |
+| NoBold    | atomic.Bool    | 原子操作控制是否禁用加粗效果 |
+| Underline | atomic.Bool    | 原子操作控制是否启用下划线   |
+| Blink     | atomic.Bool    | 原子操作控制是否启用闪烁效果 |
+
+> 所有字段均采用atomic原子类型，保证并发安全
 
 `ColorLib` 结构体实现了以下方法：
 
@@ -184,13 +187,11 @@ ColorLib 提供了一个预初始化的全局实例 `CL`，可以直接使用而
 `ColorLib` 提供了多种文本效果控制选项，可以灵活调整输出样式。
 
 ### NoColor - 禁用颜色输出
-设置 `NoColor` 为 `true` 将禁用所有颜色输出，但仍保留其他文本效果。
-
 ```go
 cl := NewColorLib()
-cl.NoColor = true  // 禁用颜色
-cl.NoBold = false  // 启用加粗
-cl.Underline = true // 启用下划线
+cl.NoColor.Store(true)  // 原子操作禁用颜色
+cl.NoBold.Store(false)  // 启用加粗
+cl.Underline.Store(true) // 原子操作启用下划线
 
 // 输出无颜色但有下划线的文本
 cl.Red("这条消息将显示为无颜色但有下划线")

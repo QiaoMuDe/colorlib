@@ -1,8 +1,8 @@
 package colorlib
 
 import (
-	"strings"
 	"sync"
+	"sync/atomic"
 )
 
 var (
@@ -19,13 +19,13 @@ func init() {
 
 // ColorLib 结构体用于管理颜色输出和日志级别映射。
 type ColorLib struct {
-	levelMap     map[string]string // LevelMap 是一个映射，用于将日志级别映射到对应的前缀
-	colorMap     map[string]int    // colorMap 是一个映射，用于将颜色名称映射到对应的 ANSI 颜色代码。
-	NoColor      bool              // NoColor 控制是否禁用颜色输出
-	formatBuffer strings.Builder   // formatBuffer 用于构建格式化后的字符串。
-	NoBold       bool              // NoBold 控制是否禁用字体加粗
-	Underline    bool              // Underline 控制是否启用下划线
-	Blink        bool              // Blink 控制是否启用闪烁效果
+	levelMap   sync.Map    // LevelMap 是一个映射，用于将日志级别映射到对应的前缀
+	colorMap   sync.Map    // colorMap 是一个映射，用于将颜色名称映射到对应的 ANSI 颜色代码。
+	bufferPool *sync.Pool  // 对象池
+	NoColor    atomic.Bool // NoColor 控制是否禁用颜色输出
+	NoBold     atomic.Bool // NoBold 控制是否禁用字体加粗
+	Underline  atomic.Bool // Underline 控制是否启用下划线
+	Blink      atomic.Bool // Blink 控制是否启用闪烁效果
 }
 
 const (

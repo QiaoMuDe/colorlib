@@ -1,8 +1,10 @@
 package colorlib
 
 import (
+	"bytes"
 	"fmt"
 	"strings"
+	"sync"
 )
 
 // GetCL 是一个线程安全用于获取全局 ColorLib 实例的函数
@@ -17,18 +19,35 @@ func GetCL() *ColorLib {
 func NewColorLib() *ColorLib {
 	// 创建一个新的 ColorLib 实例
 	cl := &ColorLib{
-		levelMap: make(map[string]string),
-		colorMap: make(map[string]int),
+		levelMap: sync.Map{}, // 使用 sync.Map 来存储日志级别映射
+		colorMap: sync.Map{}, // 使用 sync.Map 来存储颜色映射
+		bufferPool: &sync.Pool{
+			New: func() interface{} {
+				return new(bytes.Buffer)
+			}, // 使用 sync.Pool 来管理缓冲区
+		},
 	}
+
+	// 初始化是否加粗
+	cl.NoBold.Store(false)
+
+	// 初始化是否禁用颜色
+	cl.NoColor.Store(false)
+
+	// 初始化是否下划线
+	cl.Underline.Store(false)
+
+	// 初始化是否闪烁
+	cl.Blink.Store(false)
 
 	// 初始化颜色映射
 	for k, v := range colorMap {
-		cl.colorMap[k] = v
+		cl.colorMap.Store(k, v)
 	}
 
 	// 初始化日志级别映射
 	for k, v := range levelMap {
-		cl.levelMap[k] = v
+		cl.levelMap.Store(k, v)
 	}
 
 	return cl
@@ -37,205 +56,169 @@ func NewColorLib() *ColorLib {
 // printWithColor 方法用于将传入的参数以指定颜色文本形式打印到控制台。
 func (c *ColorLib) printWithColor(color string, msg ...any) {
 	// 检查是否禁用颜色输出
-	if c.NoColor {
+	if c.NoColor.Load() {
 		fmt.Print(msg...)
 		return
 	}
 
 	// 获取颜色代码
-	code, ok := c.colorMap[color]
+	code, ok := c.colorMap.Load(color)
 	if !ok {
 		fmt.Println("Invalid color:", color)
 		return
 	}
 
-	// 清理缓冲区
-	c.formatBuffer.Reset()
+	// 从对象池获取缓冲区
+	buffer := c.bufferPool.Get().(*bytes.Buffer)
+	defer func() {
+		buffer.Reset()           // 清空缓冲区
+		c.bufferPool.Put(buffer) // 将缓冲区放回对象池
+	}()
 
 	// 构建ANSI控制序列
 	var ansiCodes []string
-	if !c.NoBold {
+	if !c.NoBold.Load() {
 		ansiCodes = append(ansiCodes, "1")
 	}
-	if c.Underline {
+	if c.Underline.Load() {
 		ansiCodes = append(ansiCodes, "4")
 	}
-	if c.Blink {
+	if c.Blink.Load() {
 		ansiCodes = append(ansiCodes, "5")
 	}
+
+	// 添加颜色代码
 	ansiCodes = append(ansiCodes, fmt.Sprintf("%d", code))
 
 	// 写入前缀
-	c.formatBuffer.WriteString(fmt.Sprintf("\033[%sm", strings.Join(ansiCodes, ";")))
+	buffer.WriteString(fmt.Sprintf("\033[%sm", strings.Join(ansiCodes, ";")))
 
 	// 写入消息
 	if len(msg) > 0 {
-		c.formatBuffer.WriteString(fmt.Sprint(msg...)) // 拼接消息内容
+		buffer.WriteString(fmt.Sprint(msg...)) // 拼接消息内容
 	} else {
-		c.formatBuffer.WriteString(" ") // 如果没有消息，添加一个空格，避免完全空白的输出
+		buffer.WriteString(" ") // 如果没有消息，添加一个空格，避免完全空白的输出
 	}
 
 	// 写入颜色重置代码
-	c.formatBuffer.WriteString(fmt.Sprintf("\033[%dm", reset))
+	buffer.WriteString("\033[0m")
 
 	// 使用 fmt.Print 根据外部调用选择性添加换行符
-	fmt.Print(c.formatBuffer.String())
-
-	// 重置缓冲区
-	c.formatBuffer.Reset()
+	fmt.Print(buffer.String())
 }
 
 // returnWithColor 方法用于将传入的参数以指定颜色文本形式返回。
 func (c *ColorLib) returnWithColor(color string, msg ...any) string {
 	// 检查是否禁用颜色输出
-	if c.NoColor {
+	if c.NoColor.Load() {
 		return fmt.Sprint(msg...)
 	}
 
 	// 获取颜色代码
-	code, ok := c.colorMap[color]
+	code, ok := c.colorMap.Load(color)
 	if !ok {
 		return fmt.Sprintf("Invalid color: %s", color)
 	}
 
 	// 检查 msg 是否为空
 	if len(msg) == 0 {
-		// 构建ANSI控制序列
 		var ansiCodes []string
-		if !c.NoBold {
+		if !c.NoBold.Load() {
 			ansiCodes = append(ansiCodes, "1")
 		}
-		if c.Underline {
+		if c.Underline.Load() {
 			ansiCodes = append(ansiCodes, "4")
 		}
-		if c.Blink {
+		if c.Blink.Load() {
 			ansiCodes = append(ansiCodes, "5")
 		}
 		ansiCodes = append(ansiCodes, fmt.Sprintf("%d", code))
-		return fmt.Sprintf("\033[%sm\033[%dm", strings.Join(ansiCodes, ";"), reset)
+		return fmt.Sprintf("\033[%sm\033[0m", strings.Join(ansiCodes, ";"))
 	}
 
 	// 使用 fmt.Sprint 将所有参数拼接成一个字符串
 	combinedMsg := fmt.Sprint(msg...)
 
-	// 清理缓冲区
-	c.formatBuffer.Reset()
+	// 从对象池获取缓冲区
+	buffer := c.bufferPool.Get().(*bytes.Buffer)
+	defer func() {
+		buffer.Reset()           // 清空缓冲区
+		c.bufferPool.Put(buffer) // 将缓冲区放回对象池
+	}()
 
 	// 构建ANSI控制序列
 	var ansiCodes []string
-	if !c.NoBold {
+	if !c.NoBold.Load() {
 		ansiCodes = append(ansiCodes, "1")
 	}
-	if c.Underline {
+	if c.Underline.Load() {
 		ansiCodes = append(ansiCodes, "4")
 	}
-	if c.Blink {
+	if c.Blink.Load() {
 		ansiCodes = append(ansiCodes, "5")
 	}
 	ansiCodes = append(ansiCodes, fmt.Sprintf("%d", code))
 
 	// 写入前缀
-	c.formatBuffer.WriteString(fmt.Sprintf("\033[%sm", strings.Join(ansiCodes, ";")))
+	buffer.WriteString(fmt.Sprintf("\033[%sm", strings.Join(ansiCodes, ";")))
 
 	// 写入消息
-	c.formatBuffer.WriteString(combinedMsg) // 拼接消息内容
+	buffer.WriteString(combinedMsg) // 拼接消息内容
 
 	// 写入颜色重置代码
-	c.formatBuffer.WriteString(fmt.Sprintf("\033[%dm", reset))
+	buffer.WriteString("\033[0m")
 
 	// 获取最终字符串
-	result := c.formatBuffer.String()
-
-	// 重置缓冲区
-	c.formatBuffer.Reset()
+	result := buffer.String()
 
 	return result
 }
 
-// PromptMsg 方法用于打印带有颜色和前缀的消息。
-func (c *ColorLib) PromptMsg(level, color, format string, a ...any) {
+// promptMsg 方法用于打印带有指定前缀的消息。
+func (c *ColorLib) promptMsg(level, color, format string, a ...any) {
 	// 获取指定级别对应的前缀
-	prefix, ok := c.levelMap[level]
+	prefix, ok := c.levelMap.Load(level)
 	if !ok {
 		fmt.Println("Invalid level:", level)
 		return
 	}
 
-	// 清理缓冲区
-	c.formatBuffer.Reset()
+	// 从对象池获取缓冲区
+	buffer := c.bufferPool.Get().(*bytes.Buffer)
+	defer func() {
+		buffer.Reset()           // 清空缓冲区
+		c.bufferPool.Put(buffer) // 将缓冲区放回对象池
+	}()
 
 	// 写入前缀
-	c.formatBuffer.WriteString(prefix)
+	// 由于 prefix 是 interface{} 类型，需要进行类型断言才能作为字符串传递给 WriteString 方法
+	if prefixStr, ok := prefix.(string); ok {
+		buffer.WriteString(prefixStr)
+	} else {
+		// 转为字符串
+		buffer.WriteString(fmt.Sprintf("%v", prefix))
+	}
 
 	// 如果没有参数，直接打印前缀
 	if len(a) == 0 {
-		if c.NoColor {
-			fmt.Print(c.formatBuffer.String())
-			c.formatBuffer.Reset()
+		if c.NoColor.Load() {
+			fmt.Print(buffer.String())
 		} else {
-			c.printWithColor(color, c.formatBuffer.String())
-			c.formatBuffer.Reset()
+			c.printWithColor(color, buffer.String())
 		}
 		return
 	}
 
-	// 使用 fmt.Sprint 将所有参数拼接成一个字符串
+	// 使用 fmt.Sprintf 将所有参数拼接成一个字符串
 	combinedMsg := fmt.Sprintf(format, a...)
 
 	// 写入消息
-	c.formatBuffer.WriteString(combinedMsg)
+	buffer.WriteString(combinedMsg)
 
 	// 打印最终消息
-	if c.NoColor {
-		fmt.Print(c.formatBuffer.String())
+	if c.NoColor.Load() {
+		fmt.Print(buffer.String())
 	} else {
-		c.printWithColor(color, c.formatBuffer.String())
+		c.printWithColor(color, buffer.String())
 	}
-
-	// 重置缓冲区
-	c.formatBuffer.Reset()
-}
-
-// PMsg 方法用于打印带有颜色和前缀的消息。
-func (c *ColorLib) PMsg(level, color, format string, a ...any) {
-	// 获取指定级别对应的前缀
-	prefix, ok := c.levelMap[level]
-	if !ok {
-		fmt.Println("Invalid level:", level)
-		return
-	}
-
-	// 清理缓冲区
-	c.formatBuffer.Reset()
-
-	// 写入前缀
-	c.formatBuffer.WriteString(prefix)
-
-	// 如果没有参数，直接打印前缀
-	if len(a) == 0 {
-		if c.NoColor {
-			fmt.Print(c.formatBuffer.String())
-			c.formatBuffer.Reset()
-		} else {
-			c.printWithColor(color, c.formatBuffer.String())
-			c.formatBuffer.Reset()
-		}
-		return
-	}
-
-	// 使用 fmt.Sprint 将所有参数拼接成一个字符串
-	combinedMsg := fmt.Sprintf(format, a...)
-
-	// 写入消息
-	c.formatBuffer.WriteString(combinedMsg)
-
-	// 打印最终消息
-	if c.NoColor {
-		fmt.Print(c.formatBuffer.String())
-	} else {
-		c.printWithColor(color, c.formatBuffer.String())
-	}
-
-	// 重置缓冲区
-	c.formatBuffer.Reset()
 }

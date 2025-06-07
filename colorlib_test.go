@@ -3,6 +3,7 @@ package colorlib
 import (
 	"fmt"
 	"strings"
+	"sync"
 	"testing"
 )
 
@@ -99,7 +100,7 @@ func TestColorLib(t *testing.T) {
 func TestNoColor(t *testing.T) {
 	// 测试NoColor为true时
 	cl := NewColorLib()
-	cl.NoColor = true
+	cl.NoColor.Store(true)
 
 	// 测试所有颜色方法在NoColor=true时的行为
 	colors := []string{"black", "red", "green", "yellow", "blue", "purple", "cyan", "white", "gray", "lred", "lgreen", "lyellow", "lblue", "lpurple", "lcyan", "lwhite"}
@@ -130,7 +131,7 @@ func TestNoColor(t *testing.T) {
 	cl.PrintWarn("警告消息(禁用颜色)")
 
 	// 测试NoColor为false时
-	cl.NoColor = false
+	cl.NoColor.Store(false)
 	// 验证颜色功能恢复
 	msg := cl.returnWithColor("red", "红色消息")
 	if !strings.Contains(msg, "\033") {
@@ -142,7 +143,7 @@ func TestNoColor(t *testing.T) {
 func TestNoBold(t *testing.T) {
 	// 创建 ColorLib 实例
 	cl := NewColorLib()
-	cl.NoBold = true
+	cl.NoBold.Store(true)
 
 	// 测试禁用粗体时的输出
 	msg := cl.returnWithColor("red", "测试禁用粗体")
@@ -151,7 +152,7 @@ func TestNoBold(t *testing.T) {
 	}
 
 	// 测试启用粗体时的输出
-	cl.NoBold = false
+	cl.NoBold.Store(false)
 	msg = cl.returnWithColor("red", "测试启用粗体")
 	if !strings.Contains(msg, "1;") {
 		t.Error("NoBold=false 时未包含粗体代码")
@@ -174,14 +175,14 @@ func TestNoBold(t *testing.T) {
 
 func TestNoBold2(t *testing.T) {
 	cl := NewColorLib()
-	cl.NoBold = true
+	cl.NoBold.Store(true)
 
 	cl.PrintOk("这是一条禁用字体加粗的消息")
-	cl.NoBold = false
+	cl.NoBold.Store(false)
 	cl.PrintOk("这是一条启用字体加粗的消息")
 }
 
-// TestGlobalInstance 测试全局实例CL的功能
+// TestGlobalInstance 测试全局实例的功能
 func TestGlobalInstance(t *testing.T) {
 	// 测试打印方法
 	CL.PrintDebug("这是一条来自全局实例的调试消息")
@@ -204,7 +205,7 @@ func TestUnderlineAndBlink(t *testing.T) {
 	cl := NewColorLib()
 
 	// 测试下划线
-	cl.Underline = true
+	cl.Underline.Store(true)
 	fmt.Println("=== 下划线效果测试 ===")
 	cl.printWithColor("red", "这是一条带下划线的红色消息\n")
 	msg := cl.returnWithColor("red", "带下划线的消息")
@@ -213,7 +214,7 @@ func TestUnderlineAndBlink(t *testing.T) {
 	}
 
 	// 测试闪烁
-	cl.Blink = true
+	cl.Blink.Store(true)
 	fmt.Println("\n=== 闪烁效果测试 ===")
 	cl.printWithColor("blue", "这是一条带闪烁的蓝色消息\n")
 	msg = cl.returnWithColor("blue", "带闪烁的消息")
@@ -230,12 +231,30 @@ func TestUnderlineAndBlink(t *testing.T) {
 	}
 
 	// 测试禁用下划线和闪烁
-	cl.Underline = false
-	cl.Blink = false
+	cl.Underline.Store(false)
+	cl.Blink.Store(false)
 	fmt.Println("\n=== 普通效果测试 ===")
 	cl.printWithColor("yellow", "这是一条普通黄色消息\n")
 	msg = cl.returnWithColor("yellow", "普通消息")
 	if strings.Contains(msg, "4;") || strings.Contains(msg, "5;") {
 		t.Error("错误地添加了下划线或闪烁代码")
 	}
+}
+
+// TestGlobalInstance 测试全局实例CL的功能
+func TestConcurrencySafety(t *testing.T) {
+	fmt.Println("=== 并发安全测试 ===")
+	cl := NewColorLib()
+	var wg sync.WaitGroup
+
+	for i := 0; i < 100; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			cl.PrintInfo("并发测试")
+			cl.Sgreen("并发字符串")
+		}()
+	}
+
+	wg.Wait()
 }
