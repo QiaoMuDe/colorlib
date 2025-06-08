@@ -259,9 +259,3 @@ func TestUnderlineAndBlink(t *testing.T) {
 		t.Error("错误地添加了下划线或闪烁代码")
 	}
 }
-
-// 测试终端是否支持ANSI转义字符
-func TestTerminalSupport(t *testing.T) {
-	fmt.Println("=== 终端支持测试 ===")
-	fmt.Printf("终端是否支持ANSI转义字符: %v\n", isTerminalSupportANSI())
-}
