@@ -156,6 +156,13 @@ func TestNoColor(t *testing.T) {
 	if !strings.Contains(msg, "\033") {
 		t.Error("NoColor=false时未正确添加颜色代码")
 	}
+
+	// 新增测试：验证禁用颜色时不会输出ANSI转义字符
+	cl.NoColor.Store(true)
+	msg = cl.returnWithColor("red", "测试禁用颜色输出")
+	if strings.Contains(msg, "\033") {
+		t.Error("NoColor=true时仍然包含ANSI转义字符")
+	}
 }
 
 // TestNoBold 测试禁用字体加粗的功能

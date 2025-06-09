@@ -84,13 +84,13 @@ func (c *ColorLib) printWithColor(color string, msg ...any) {
 
 	// 构建ANSI控制序列
 	var ansiCodes []string
-	if !c.NoBold.Load() {
+	if !c.NoBold.Load() { // 检查是否加粗
 		ansiCodes = append(ansiCodes, "1")
 	}
-	if c.Underline.Load() {
+	if c.Underline.Load() { // 检查是否下划线
 		ansiCodes = append(ansiCodes, "4")
 	}
-	if c.Blink.Load() {
+	if c.Blink.Load() { // 检查是否闪烁
 		ansiCodes = append(ansiCodes, "5")
 	}
 
