@@ -4,6 +4,55 @@ import (
 	"fmt"
 )
 
+// PrintColorf 方法根据颜色代码常量打印对应颜色的文本
+func (c *ColorLib) PrintColorf(code int, format string, a ...any) {
+	// 根据颜色代码获取颜色名称
+	var color string
+	switch code {
+	case Black:
+		color = "black"
+	case Red:
+		color = "red"
+	case Green:
+		color = "green"
+	case Yellow:
+		color = "yellow"
+	case Blue:
+		color = "blue"
+	case Purple:
+		color = "purple"
+	case Cyan:
+		color = "cyan"
+	case White:
+		color = "white"
+	case Gray:
+		color = "gray"
+	case Lred:
+		color = "lred"
+	case Lgreen:
+		color = "lgreen"
+	case Lyellow:
+		color = "lyellow"
+	case Lblue:
+		color = "lblue"
+	case Lpurple:
+		color = "lpurple"
+	case Lcyan:
+		color = "lcyan"
+	case Lwhite:
+		color = "lwhite"
+	default:
+		fmt.Println("Invalid color code:", code)
+		return
+	}
+
+	// 使用 fmt.Sprint 将所有参数拼接成一个字符串
+	formattedMsg := fmt.Sprintf(format, a...)
+
+	// 调用 printWithColor 方法，传入格式化后的字符串
+	c.printWithColor(color, formattedMsg)
+}
+
 // Bluef 方法用于将传入的参数以蓝色文本形式打印到控制台（带占位符）。
 func (c *ColorLib) Bluef(format string, a ...any) {
 	// 使用 fmt.Sprintf 格式化参数

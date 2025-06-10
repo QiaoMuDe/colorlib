@@ -28,13 +28,6 @@ func NewColorLib() *ColorLib {
 		},
 	}
 
-	// 初始化是否禁用颜色, 检查终端是否支持 ANSI 颜色
-	// if isTerminalSupportANSI() {
-	// 	cl.NoColor.Store(false) // 终端支持 ANSI 时，默认不禁用颜色
-	// } else {
-	// 	cl.NoColor.Store(true) // 终端不支持 ANSI 时，禁用颜色
-	// }
-
 	// 初始化是否禁用颜色
 	cl.NoColor.Store(false)
 
