@@ -266,3 +266,22 @@ func TestUnderlineAndBlink(t *testing.T) {
 		t.Error("错误地添加了下划线或闪烁代码")
 	}
 }
+
+// 测试新增的通用颜色方法
+func TestColorLib_NewColorMethods(t *testing.T) {
+	fmt.Println("\n=== 测试新增的通用颜色方法 ===")
+
+	cl := NewColorLib()
+
+	cl.PrintColorln(Blue, "这是一条蓝色消息")
+
+	cl.PrintColorf(Blue, "这是一条 %s 蓝色消息\n", "格式化")
+
+	cl.PrintColorln(Red, "这是一条红色消息")
+
+	cl.PrintColorf(Red, "这是一条 %s 红色消息\n", "格式化")
+
+	fmt.Println(cl.SColor(Blue, "这是一条返回的蓝色字符串"))
+
+	fmt.Println(cl.SColorf(Blue, "这是一条 %s 返回的蓝色字符串\n", "格式化"))
+}

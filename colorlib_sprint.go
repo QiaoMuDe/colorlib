@@ -2,8 +2,8 @@ package colorlib
 
 import "fmt"
 
-// SprintColor 方法根据颜色代码常量打印对应颜色的文本
-func (c *ColorLib) SprintColor(code int, msg ...any) string {
+// SColor 方法根据颜色代码常量打印对应颜色的文本
+func (c *ColorLib) SColor(code int, msg ...any) string {
 	// 根据颜色代码获取颜色名称
 	var color string
 	switch code {
